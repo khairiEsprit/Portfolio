@@ -7,10 +7,10 @@ export default function About() {
         <h1 className="text-2xl font-bold text-center mt-2 mb-5">About Me</h1>
 
         <p className="text-lg md:text-xl">
-        I'm a passionate software developer with a proven track record of building innovative and scalable web applications.
+        I&apos;m passionate software developer with a proven track record of building innovative and scalable web applications.
           <br />
           <br />
-          My educational background includes a Bachelor's degree in Computer Science from the Higher Institute of Computer Science of Mahdia.
+          My educational background includes a  Bachelor&apos;s degree in Computer Science from the Higher Institute of Computer Science of Mahdia.
 
           <br />
           <br />I have experience working as 
