@@ -87,7 +87,7 @@ export const Data = [
   },
 
   {
-    link: "khairibouzid95@gmail.com",
+    link: "mailto:khairibouzid95@gmail.com",
     icon: "https://www.svgrepo.com/show/19352/email.svg",
     tooltip: "Mail Us",
   },
