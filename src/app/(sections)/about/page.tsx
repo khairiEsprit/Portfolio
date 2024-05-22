@@ -7,21 +7,27 @@ export default function About() {
         <h1 className="text-2xl font-bold text-center mt-2 mb-5">About Me</h1>
 
         <p className="text-lg md:text-xl">
-        I&apos;m passionate software developer with a proven track record of building innovative and scalable web applications.
+          I&apos;m passionate software developer with a proven track record of
+          building innovative and scalable web applications.
           <br />
           <br />
-          My educational background includes a  Bachelor&apos;s degree in Computer Science from the Higher Institute of Computer Science of Mahdia.
-
+          My educational background includes a Bachelor&apos;s degree in
+          Computer Science from the Higher Institute of Computer Science of
+          Mahdia.
           <br />
-          <br />I have experience working as 
+          <br />I have experience working as
           <span className="font-semibold mx-2">
-            a software  Developer Intern
+            a software Developer Intern
           </span>
-          At SW Consulting, I designed and developed my end-of-study project utilizing a modern tech stack. I built the frontend using Vue.js and leveraged Node.js with Express.js and TypeScript for the backend. To ensure scalability, I implemented MongoDB as the database. Additionally, I employed clean architecture principles to promote maintainable and extensible applications.
-. My
-          skills include proficiency in HTML, CSS, JavaScript, vue.JS, Pinia,
-          Tailwind CSS, Node.JS, Express.JS, MongoDB, Git, Github, Visual Studio
-          Code and Vercel.
+          At SW Consulting, I designed and developed my end-of-study project
+          utilizing a modern tech stack. I built the frontend using Vue.js and
+          leveraged Node.js with Express.js and TypeScript for the backend. To
+          ensure scalability, I implemented MongoDB as the database.
+          Additionally, I employed clean architecture principles to promote
+          maintainable and extensible applications. . My skills include
+          proficiency in HTML, CSS, JavaScript, vue.JS, Pinia, Tailwind CSS,
+          Node.JS, Express.JS, MongoDB, Git, Github, Visual Studio Code and
+          Vercel.
           <br />
           <br />I have completed various projects, including
           <span className="font-semibold mx-2">
