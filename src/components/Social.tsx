@@ -76,21 +76,22 @@ export const PhoneSocial = () => {
 
 export const Data = [
   {
-    link: "https://www.linkedin.com/in/mohamed-khairi-bouzid-a32753231/",
+    link: "https://www.linkedin.com/in/pankajktech/",
     icon: "https://www.svgrepo.com/show/475661/linkedin-color.svg",
     tooltip: "Connect On Linkedin",
   },
   {
-    link: "https://github.com/khairibzd",
-    link: "https://github.com/khairibzd",
+    link: "https://github.com/pankajktech",
     icon: "https://www.svgrepo.com/show/475654/github-color.svg",
     tooltip: "Connect On Github",
   },
- 
- 
   {
-    link: "khairibouzid95@gmail.com",
-    link: "khairibouzid95@gmail.com",
+    link: "https://twitter.com/dev_pthakur",
+    icon: "https://www.svgrepo.com/show/475689/twitter-color.svg",
+    tooltip: "Follow On X",
+  },
+  {
+    link: "mailto:tunewithpk@gmail.com",
     icon: "https://www.svgrepo.com/show/19352/email.svg",
     tooltip: "Mail Us",
   },
