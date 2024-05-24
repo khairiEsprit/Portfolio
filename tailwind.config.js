@@ -21,7 +21,9 @@ module.exports = {
         blob: "blob 7s infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear", // Added new animation
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
+        shimmer: "shimmer 2s linear infinite"
+        // Added new animation
       },
       keyframes: {
         blob: {
@@ -51,6 +53,14 @@ module.exports = {
             "offset-distance": "100%", // Added new keyframes
           },
         },
+        shimmer: {
+          from: {
+            "backgroundPosition": "0 0"
+          },
+          to: {
+            "backgroundPosition": "-200% 0"
+          }
+        }
       },
       colors: {
         border: "hsl(var(--border))",

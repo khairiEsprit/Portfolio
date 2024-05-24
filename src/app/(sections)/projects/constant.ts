@@ -12,7 +12,7 @@ export const ProjectData = [
     description:
       "A recommendation platform with a chatbot that helps users find their specific destination.",
     techstack: ["Vue", "Pinia", "Rasa platform","Python","TypeScript","MongoD"],
-    live: "https://deal-discover-vue.vercel.app/places",
+    live: "https://deal-discover-vue.vercel.app/",
     github: "https://github.com/medkira/DealDiscover_vue",
   },
 

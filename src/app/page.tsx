@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { File, User } from "lucide-react";
 import NextImage from "@/components/NextImage";
@@ -6,6 +8,7 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { PhoneSocial } from "@/components/Social";
 import { BorderBeam } from "@/components/magicUi/border-beam";
 import TypingAnimation from "@/components/magicUi/typing-animation";
+import Typewriter from "typewriter-effect";
 
 export default function Home() {
   return (
@@ -18,10 +21,20 @@ export default function Home() {
             Mohamed Khairi bouzid
           </span>
         </p>
-        <TypingAnimation
+        {/* <TypingAnimation
           className="text-3xl md:text-4xl font-bold text-light-blue-500"
           text="Software Developer"
-        />
+        /> */}
+        <div className="text-3xl md:text-4xl font-bold text-light-blue-500">
+          <Typewriter
+            options={{
+              strings: ["Software Developer"],
+              autoStart: true,
+              loop: true,
+              delay: 50,
+            }}
+          />
+        </div>
         <p className="text-lg md:text-xl font-medium relative">
           I'm a software developer based in Tunisia with a passion for web
           development and a love for creating web apps. I bring a strong
@@ -34,25 +47,20 @@ export default function Home() {
 
         <div className="flex flex-row justify-center md:justify-normal gap-4 md:gap-6 mt-5">
           <Link href={"/about"}>
-            <Button
-              variant="secondary"
-              className="flex rounded-full gap-2 items-center"
-            >
+            <button className="gap-2 inline-flex h-12 animate-shimmer items-center justify-center rounded-full border border-slate-800 bg-opacity-50 px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400">
               <User className="text-lg" />
-              About Me
-            </Button>
+              About
+            </button>
           </Link>
+
           <Link
             href="https://drive.google.com/file/d/1SGOnwl4H2H8b4o1OE9OSyyERJfPOaTim/view?usp=drive_link"
             target="_blank"
           >
-            <Button
-              variant="default"
-              className="flex rounded-full gap-2 items-center"
-            >
+            <button className="gap-2 inline-flex h-12 animate-shimmer items-center justify-center rounded-full border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400  focus:border-transparent">
               <File className="text-lg" />
               Resume
-            </Button>
+            </button>
           </Link>
           <ThemeSwitcher />
         </div>
@@ -64,7 +72,7 @@ export default function Home() {
           width={""}
           height={""}
           alt="khairi bouzid"
-          className="rounded-full w-full h-full shadow-lg"
+          className="rounded-full w-full h-full shadow-lg relative"
         />
         <BorderBeam
           size={300}
@@ -76,3 +84,7 @@ export default function Home() {
     </div>
   );
 }
+
+// Button code
+
+// tailwind.config.js code
