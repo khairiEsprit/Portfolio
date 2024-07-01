@@ -31,7 +31,7 @@ export default function About() {
           <br />
           <br />I have completed various projects, including
           <span className="font-semibold mx-2">
-            The Carbon calculator, DealDiscover, and This portfolio
+            The Carbon calculator, DealDiscover, Ai Mock Interview and This portfolio
           </span>
           which demonstrate my technical expertise and attention to detail.
           <br />

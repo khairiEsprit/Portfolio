@@ -9,6 +9,8 @@ import { PhoneSocial } from "@/components/Social";
 import { BorderBeam } from "@/components/magicUi/border-beam";
 import TypingAnimation from "@/components/magicUi/typing-animation";
 import Typewriter from "typewriter-effect";
+import Image from 'next/image';
+
 
 export default function Home() {
   return (
@@ -65,12 +67,12 @@ export default function Home() {
           <ThemeSwitcher />
         </div>
       </div>
-
       <div className="relative w-52 h-52 md:w-72 md:h-72 rounded-full">
-        <NextImage
+       
+        <Image
           src="/pk.webp"
-          width={""}
-          height={""}
+          width={1000}
+          height={1000}
           alt="khairi bouzid"
           className="rounded-full w-full h-full shadow-lg relative"
         />

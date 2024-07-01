@@ -8,7 +8,6 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import NextImage from "../NextImage";
 import { Button } from "../ui/button";
 
 interface Item {
@@ -78,7 +77,7 @@ const AnimatedTooltip: React.FC<AnimatedTooltipProps> = ({ item }) => {
         </motion.div>
       )}
       <Button variant="secondary" size="icon" className="rounded-full">
-        <NextImage
+        <Image
           onMouseMove={handleMouseMove}
           src={item.image}
           alt={item.name}
