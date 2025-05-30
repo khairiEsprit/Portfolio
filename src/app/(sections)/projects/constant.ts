@@ -31,4 +31,34 @@ export const ProjectData = [
     live: "https://deal-discover-vue.vercel.app/",
     github: "https://github.com/medkira/DealDiscover_vue",
   },
+   {
+    title: "Email Reply Agent",
+    description:
+      "An intelligent email assistant analyzes incoming messages and generates contextually appropriate responses.",
+    techstack: [
+      "HTML",
+      "CSS",
+      "Python",
+      "Flask",
+      "Prompt Engineering",
+      "Sqlite",
+    ],
+    live: "https://emailagentreplay.me/",
+    github: "#",
+  },
+   {
+    title: "E-waste",
+    description:
+      "E-Waste Management Platform is an application that transforms electronic waste management through AI, blockchain, and face recognition.",
+    techstack: [
+      "Symfony",
+      "Python",
+      "JavaScript",
+      "Solidity",
+      "Iot",
+      "Mysql",
+    ],
+    live: "ewaste-symfony.azurewebsites.net",
+    github: "https://github.com/khairiEsprit/e-waste_symfony",
+  },
 ];
