@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Frontend, Backend, Tools, AIML } from "./constant";
+import { Frontend, Backend, Tools, AIML, Languages } from "./constant";
 
 interface SkillComponents {
   [key: string]: () => JSX.Element;
@@ -12,6 +12,7 @@ const skillComponents: SkillComponents = {
   Backend: Backend,
   Tools: Tools,
   "AI/ML": AIML,
+  Languages: Languages,
 };
 
 const data = [
@@ -26,6 +27,9 @@ const data = [
   },
   {
     label: "AI/ML",
+  },
+  {
+    label: "Languages",
   },
 ];
 

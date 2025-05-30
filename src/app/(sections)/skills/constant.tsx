@@ -123,7 +123,24 @@ export const AIMLSkills = [
     name: "LLM",
     icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png",
   },
-  
+];
+
+export const LanguageSkills = [
+  {
+    name: "English",
+    proficiency: "Full Professional Proficiency",
+    icon: "🇺🇸",
+  },
+  {
+    name: "French",
+    proficiency: "Professional Working Proficiency",
+    icon: "🇫🇷",
+  },
+  {
+    name: "Arabic",
+    proficiency: "Native or Bilingual Proficiency",
+    icon: "🇸🇦",
+  },
 ];
 
 function SkillCategory({ skills }: { skills: any[] }) {
@@ -150,6 +167,26 @@ function SkillCategory({ skills }: { skills: any[] }) {
   );
 }
 
+function LanguageCategory({ languages }: { languages: any[] }) {
+  return (
+    <div className="my-5 flex flex-wrap gap-5 md:w-[700px]">
+      {languages.map((language, index) => (
+        <div key={index} className="flex flex-col items-start">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-2xl">{language?.icon}</span>
+            <span className="font-semibold text-lg animate_in">
+              {language?.name}
+            </span>
+          </div>
+          <span className="text-sm text-blue-600 italic animate_in">
+            {language?.proficiency}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function Frontend() {
   return <SkillCategory skills={FrontendSkills} />;
 }
@@ -164,4 +201,8 @@ export function Tools() {
 
 export function AIML() {
   return <SkillCategory skills={AIMLSkills} />;
+}
+
+export function Languages() {
+  return <LanguageCategory languages={LanguageSkills} />;
 }
