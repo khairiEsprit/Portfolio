@@ -22,8 +22,22 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
-        shimmer: "shimmer 2s linear infinite"
-        // Added new animation
+        shimmer: "shimmer 2s linear infinite",
+        // Enhanced modern animations
+        "fade-in": "fadeIn 0.6s ease-out",
+        "fade-up": "fadeUp 0.8s ease-out",
+        "fade-down": "fadeDown 0.8s ease-out",
+        "fade-left": "fadeLeft 0.8s ease-out",
+        "fade-right": "fadeRight 0.8s ease-out",
+        "scale-in": "scaleIn 0.5s ease-out",
+        "slide-up": "slideUp 0.6s ease-out",
+        "slide-down": "slideDown 0.6s ease-out",
+        "bounce-in": "bounceIn 0.8s ease-out",
+        float: "float 3s ease-in-out infinite",
+        "pulse-slow": "pulse 3s ease-in-out infinite",
+        "spin-slow": "spin 3s linear infinite",
+        gradient: "gradient 3s ease infinite",
+        glow: "glow 2s ease-in-out infinite alternate",
       },
       keyframes: {
         blob: {
@@ -55,12 +69,63 @@ module.exports = {
         },
         shimmer: {
           from: {
-            "backgroundPosition": "0 0"
+            backgroundPosition: "0 0",
           },
           to: {
-            "backgroundPosition": "-200% 0"
-          }
-        }
+            backgroundPosition: "-200% 0",
+          },
+        },
+        // Enhanced modern keyframes
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        fadeUp: {
+          "0%": { opacity: "0", transform: "translateY(30px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        fadeDown: {
+          "0%": { opacity: "0", transform: "translateY(-30px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        fadeLeft: {
+          "0%": { opacity: "0", transform: "translateX(-30px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        fadeRight: {
+          "0%": { opacity: "0", transform: "translateX(30px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        scaleIn: {
+          "0%": { opacity: "0", transform: "scale(0.9)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        slideUp: {
+          "0%": { transform: "translateY(100%)" },
+          "100%": { transform: "translateY(0)" },
+        },
+        slideDown: {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(0)" },
+        },
+        bounceIn: {
+          "0%": { opacity: "0", transform: "scale(0.3)" },
+          "50%": { opacity: "1", transform: "scale(1.05)" },
+          "70%": { transform: "scale(0.9)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        gradient: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        glow: {
+          "0%": { boxShadow: "0 0 5px rgba(59, 130, 246, 0.5)" },
+          "100%": { boxShadow: "0 0 20px rgba(59, 130, 246, 0.8)" },
+        },
       },
       colors: {
         border: "hsl(var(--border))",
