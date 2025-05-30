@@ -30,7 +30,7 @@ export default function Home() {
         <div className="text-3xl md:text-4xl font-bold text-light-blue-500">
           <Typewriter
             options={{
-              strings: ["Software Developer"],
+              strings: ["Engineering Student At Esprit"],
               autoStart: true,
               loop: true,
               delay: 50,
@@ -38,11 +38,7 @@ export default function Home() {
           />
         </div>
         <p className="text-lg md:text-xl font-medium relative">
-          I'm a software developer based in Tunisia with a passion for web
-          development and a love for creating web apps. I bring a strong
-          understanding of web development technologies and design principles to
-          create dynamic and interactive web experiences that exceed client
-          expectations.
+        I hold a Bachelor's degree in Computer Science and am currently in my first year of an engineering program in Computer and Information Science at Esprit. Passionate about web development and Web3—particularly blockchain technology—I bring creativity, perseverance, and autonomy to everything I do. I'm eager to contribute and innovate within the dynamic and ever-evolving tech landscape.
         </p>
 
         <PhoneSocial />

@@ -33,11 +33,10 @@ const Education = () => {
                   </h3>
                   <p className="text-base flex flex-wrap gap-1 mt-2 font-medium text-gray-600 dark:text-gray-400">
                     {data.department}
-                     <span className="text-base font-mono text-gray-600 dark:text-gray-400">
-                    ({data.course})
-                  </span>
+                    <span className="text-base font-mono text-gray-600 dark:text-gray-400">
+                      ({data.course})
+                    </span>
                   </p>
-                 
                 </div>
               </div>
             </li>
@@ -51,6 +50,13 @@ const Education = () => {
 export default Education;
 
 const Data = [
+  {
+    name: "ESPRIT",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Esprit_Logo.svg/1200px-Esprit_Logo.svg.png",
+    timeSpan: "2024 - Present",
+    department: "Computer and Information Engineering",
+    course: "Engineering Cycle",
+  },
   {
     name: "Mahdia University",
     logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQqKsKU2ULBxYuacIlAzozkyzskDfJBUrKeYnoUk7OrA&s",

@@ -11,8 +11,8 @@ export const FrontendSkills = [
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg",
   },
   {
-  name: "ReactJs",
-  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+    name: "ReactJs",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
   },
   {
     name: "TypeScript",
@@ -34,7 +34,6 @@ export const FrontendSkills = [
     name: "Tailwind CSS",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
   },
-
 ];
 
 export const BackendSkills = [
@@ -45,6 +44,22 @@ export const BackendSkills = [
   {
     name: "Express JS",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+  },
+  {
+    name: "Python",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+  },
+  {
+    name: "Flask",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg",
+  },
+  {
+    name: "Java",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+  },
+  {
+    name: "Symfony",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/symfony/symfony-original.svg",
   },
   {
     name: "MongoDB",
@@ -73,6 +88,42 @@ export const ToolSkills = [
     name: "Postman",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg",
   },
+  {
+    name: "Linux",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
+  },
+  {
+    name: "Azure",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
+  },
+  {
+    name: "Ethereum",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ethereum/ethereum-original.svg",
+  },
+  {
+    name: "Solidity",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/solidity/solidity-original.svg",
+  },
+  {
+    name: "HardHat",
+    icon: "https://hardhat.org/hardhat-logo.svg",
+  },
+];
+
+export const AIMLSkills = [
+  {
+    name: "Machine Learning",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg",
+  },
+  {
+    name: "Prompt Engineering",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/openai/openai-original.svg",
+  },
+  {
+    name: "LLM",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png",
+  },
+  
 ];
 
 function SkillCategory({ skills }: { skills: any[] }) {
@@ -109,4 +160,8 @@ export function Backend() {
 
 export function Tools() {
   return <SkillCategory skills={ToolSkills} />;
+}
+
+export function AIML() {
+  return <SkillCategory skills={AIMLSkills} />;
 }
