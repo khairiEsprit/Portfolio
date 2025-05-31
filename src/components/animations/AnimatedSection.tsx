@@ -71,7 +71,7 @@ export default function AnimatedSection({
 }: AnimatedSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, {
-    threshold,
+    amount: threshold,
     once,
     margin: "-50px 0px -50px 0px",
   });
@@ -113,7 +113,7 @@ export function StaggeredContainer({
   once = true,
 }: StaggeredContainerProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { threshold, once });
+  const isInView = useInView(ref, { amount: threshold, once });
 
   const containerVariants = {
     hidden: {},

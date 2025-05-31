@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 import NextImage from "@/components/NextImage";
 
-export default function page() {
+export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const sendEmail = async (e: any) => {
@@ -99,4 +99,3 @@ export default function page() {
     </div>
   );
 }
-  

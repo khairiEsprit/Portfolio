@@ -74,7 +74,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://your-domain.com", // Replace with your actual domain
+    url: "https://www.mohamedkhairibouzid.engineer/",
     siteName: "Mohamed Khairi Bouzid Portfolio",
     title:
       "Mohamed Khairi Bouzid - Full Stack Developer & Computer Engineering Student",
@@ -82,14 +82,14 @@ export const metadata: Metadata = {
       "Passionate full-stack developer and computer engineering student at ESPRIT, specializing in web development, blockchain technology, and modern JavaScript frameworks.",
     images: [
       {
-        url: "/og-image.jpg", // We'll create this
+        url: "https://www.mohamedkhairibouzid.engineer/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Mohamed Khairi Bouzid - Full Stack Developer Portfolio",
         type: "image/jpeg",
       },
       {
-        url: "/pk.webp",
+        url: "https://www.mohamedkhairibouzid.engineer/pk.webp",
         width: 1000,
         height: 1000,
         alt: "Mohamed Khairi Bouzid Profile Picture",
@@ -103,16 +103,14 @@ export const metadata: Metadata = {
       "Mohamed Khairi Bouzid - Full Stack Developer & Computer Engineering Student",
     description:
       "Passionate full-stack developer and computer engineering student at ESPRIT, specializing in web development, blockchain technology, and modern JavaScript frameworks.",
-    images: ["/og-image.jpg"], // We'll create this
-    creator: "@khairibzd", // Replace with your actual Twitter handle if you have one
+    images: ["https://www.mohamedkhairibouzid.engineer/og-image.jpg"],
+    creator: "@khairibzd",
   },
   verification: {
-    google: "your-google-verification-code", // Add your Google Search Console verification code
-    // yandex: "your-yandex-verification-code", // Add if needed
-    // yahoo: "your-yahoo-verification-code", // Add if needed
+    google: "kMmXVdoojaLfpzTztLAeVusW3OXs4JXcTam",
   },
   alternates: {
-    canonical: "https://your-domain.com", // Replace with your actual domain
+    canonical: "https://www.mohamedkhairibouzid.engineer/",
   },
   category: "technology",
   classification: "Portfolio Website",
@@ -128,24 +126,13 @@ export const metadata: Metadata = {
     maximumScale: 5,
     userScalable: true,
   },
-  manifest: "/manifest.json", // We'll create this
+  manifest: "/manifest.json",
   icons: {
-    icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
-    other: [
-      {
-        rel: "mask-icon",
-        url: "/safari-pinned-tab.svg",
-        color: "#3b82f6",
-      },
-    ],
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
-  metadataBase: new URL("https://your-domain.com"), // Replace with your actual domain
+  metadataBase: new URL("https://www.mohamedkhairibouzid.engineer/"),
 };
 
 // Structured Data for SEO
@@ -154,20 +141,20 @@ const structuredData = {
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://your-domain.com/#person",
+      "@id": "https://www.mohamedkhairibouzid.engineer/#person",
       name: "Mohamed Khairi Bouzid",
       alternateName: ["Khairi Bouzid", "Mohamed Khairi"],
       description:
         "Full Stack Developer and Computer Engineering Student at ESPRIT",
-      url: "https://your-domain.com",
+      url: "https://www.mohamedkhairibouzid.engineer/",
       image: {
         "@type": "ImageObject",
-        url: "https://your-domain.com/pk.webp",
+        url: "https://www.mohamedkhairibouzid.engineer/pk.webp",
         width: 1000,
         height: 1000,
       },
       sameAs: [
-        "https://github.com/khairibzd",
+        "https://github.com/khairiEsprit",
         "https://www.linkedin.com/in/mohamed-khairi-bouzid-a32753231/",
         "mailto:khairibouzid95@gmail.com",
       ],
@@ -209,33 +196,34 @@ const structuredData = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://your-domain.com/#website",
-      url: "https://your-domain.com",
+      "@id": "https://www.mohamedkhairibouzid.engineer/#website",
+      url: "https://www.mohamedkhairibouzid.engineer/",
       name: "Mohamed Khairi Bouzid Portfolio",
       description:
         "Portfolio website showcasing projects and skills of Mohamed Khairi Bouzid, a full-stack developer and computer engineering student.",
       publisher: {
-        "@id": "https://your-domain.com/#person",
+        "@id": "https://www.mohamedkhairibouzid.engineer/#person",
       },
       inLanguage: "en-US",
       potentialAction: {
         "@type": "SearchAction",
-        target: "https://your-domain.com/search?q={search_term_string}",
+        target:
+          "https://www.mohamedkhairibouzid.engineer/search?q={search_term_string}",
         "query-input": "required name=search_term_string",
       },
     },
     {
       "@type": "WebPage",
-      "@id": "https://your-domain.com/#webpage",
-      url: "https://your-domain.com",
+      "@id": "https://www.mohamedkhairibouzid.engineer/#webpage",
+      url: "https://www.mohamedkhairibouzid.engineer/",
       name: "Home - Mohamed Khairi Bouzid Portfolio",
       description:
         "Welcome to Mohamed Khairi Bouzid's portfolio - showcasing innovative web development projects and technical expertise.",
       isPartOf: {
-        "@id": "https://your-domain.com/#website",
+        "@id": "https://www.mohamedkhairibouzid.engineer/#website",
       },
       about: {
-        "@id": "https://your-domain.com/#person",
+        "@id": "https://www.mohamedkhairibouzid.engineer/#person",
       },
       datePublished: "2024-01-01",
       dateModified: new Date().toISOString().split("T")[0],
@@ -252,6 +240,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="smooth-scroll">
       <head>
+        {/* Favicon */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+
         {/* Preload critical resources */}
         <link rel="preload" href="/pk.webp" as="image" type="image/webp" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
