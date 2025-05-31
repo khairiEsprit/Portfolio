@@ -21,10 +21,227 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio: Mohammed khairi bouzid",
+  title: {
+    default:
+      "Mohamed Khairi Bouzid - Full Stack Developer & Computer Engineering Student",
+    template: "%s | Mohamed Khairi Bouzid Portfolio",
+  },
   description:
-    "Mohammed khairi bouzid is a software developer based on tunisia",
-  keywords: "khairi, bouzid,software developer, portfolio",
+    "Mohamed Khairi Bouzid is a passionate full-stack developer and computer engineering student at ESPRIT, specializing in web development, blockchain technology, and modern JavaScript frameworks. Explore my portfolio showcasing innovative projects and technical expertise.",
+  keywords: [
+    "Mohamed Khairi Bouzid",
+    "Full Stack Developer",
+    "Computer Engineering",
+    "ESPRIT",
+    "Web Developer",
+    "React Developer",
+    "Next.js Developer",
+    "JavaScript Developer",
+    "TypeScript Developer",
+    "Node.js Developer",
+    "Blockchain Developer",
+    "Web3 Developer",
+    "Frontend Developer",
+    "Backend Developer",
+    "Software Engineer",
+    "Tunisia Developer",
+    "Portfolio",
+    "Computer Science",
+    "Vue.js Developer",
+    "MongoDB Developer",
+    "Express.js Developer",
+    "Tailwind CSS",
+    "Software Development",
+    "Programming",
+    "Tech Portfolio",
+  ],
+  authors: [
+    { name: "Mohamed Khairi Bouzid", url: "https://github.com/khairibzd" },
+  ],
+  creator: "Mohamed Khairi Bouzid",
+  publisher: "Mohamed Khairi Bouzid",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://your-domain.com", // Replace with your actual domain
+    siteName: "Mohamed Khairi Bouzid Portfolio",
+    title:
+      "Mohamed Khairi Bouzid - Full Stack Developer & Computer Engineering Student",
+    description:
+      "Passionate full-stack developer and computer engineering student at ESPRIT, specializing in web development, blockchain technology, and modern JavaScript frameworks.",
+    images: [
+      {
+        url: "/og-image.jpg", // We'll create this
+        width: 1200,
+        height: 630,
+        alt: "Mohamed Khairi Bouzid - Full Stack Developer Portfolio",
+        type: "image/jpeg",
+      },
+      {
+        url: "/pk.webp",
+        width: 1000,
+        height: 1000,
+        alt: "Mohamed Khairi Bouzid Profile Picture",
+        type: "image/webp",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Mohamed Khairi Bouzid - Full Stack Developer & Computer Engineering Student",
+    description:
+      "Passionate full-stack developer and computer engineering student at ESPRIT, specializing in web development, blockchain technology, and modern JavaScript frameworks.",
+    images: ["/og-image.jpg"], // We'll create this
+    creator: "@khairibzd", // Replace with your actual Twitter handle if you have one
+  },
+  verification: {
+    google: "your-google-verification-code", // Add your Google Search Console verification code
+    // yandex: "your-yandex-verification-code", // Add if needed
+    // yahoo: "your-yahoo-verification-code", // Add if needed
+  },
+  alternates: {
+    canonical: "https://your-domain.com", // Replace with your actual domain
+  },
+  category: "technology",
+  classification: "Portfolio Website",
+  referrer: "origin-when-cross-origin",
+  colorScheme: "dark light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#3b82f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#1e40af" },
+  ],
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
+  manifest: "/manifest.json", // We'll create this
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    other: [
+      {
+        rel: "mask-icon",
+        url: "/safari-pinned-tab.svg",
+        color: "#3b82f6",
+      },
+    ],
+  },
+  metadataBase: new URL("https://your-domain.com"), // Replace with your actual domain
+};
+
+// Structured Data for SEO
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://your-domain.com/#person",
+      name: "Mohamed Khairi Bouzid",
+      alternateName: ["Khairi Bouzid", "Mohamed Khairi"],
+      description:
+        "Full Stack Developer and Computer Engineering Student at ESPRIT",
+      url: "https://your-domain.com",
+      image: {
+        "@type": "ImageObject",
+        url: "https://your-domain.com/pk.webp",
+        width: 1000,
+        height: 1000,
+      },
+      sameAs: [
+        "https://github.com/khairibzd",
+        "https://www.linkedin.com/in/mohamed-khairi-bouzid-a32753231/",
+        "mailto:khairibouzid95@gmail.com",
+      ],
+      jobTitle: "Full Stack Developer",
+      worksFor: {
+        "@type": "Organization",
+        name: "SW Consulting",
+      },
+      alumniOf: [
+        {
+          "@type": "EducationalOrganization",
+          name: "Higher Institute of Computer Science of Mahdia",
+          description: "Bachelor's degree in Computer Science",
+        },
+        {
+          "@type": "EducationalOrganization",
+          name: "ESPRIT",
+          description: "Computer and Information Engineering",
+        },
+      ],
+      knowsAbout: [
+        "Web Development",
+        "Blockchain Technology",
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Vue.js",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Web3",
+        "Software Engineering",
+      ],
+      nationality: {
+        "@type": "Country",
+        name: "Tunisia",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://your-domain.com/#website",
+      url: "https://your-domain.com",
+      name: "Mohamed Khairi Bouzid Portfolio",
+      description:
+        "Portfolio website showcasing projects and skills of Mohamed Khairi Bouzid, a full-stack developer and computer engineering student.",
+      publisher: {
+        "@id": "https://your-domain.com/#person",
+      },
+      inLanguage: "en-US",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: "https://your-domain.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://your-domain.com/#webpage",
+      url: "https://your-domain.com",
+      name: "Home - Mohamed Khairi Bouzid Portfolio",
+      description:
+        "Welcome to Mohamed Khairi Bouzid's portfolio - showcasing innovative web development projects and technical expertise.",
+      isPartOf: {
+        "@id": "https://your-domain.com/#website",
+      },
+      about: {
+        "@id": "https://your-domain.com/#person",
+      },
+      datePublished: "2024-01-01",
+      dateModified: new Date().toISOString().split("T")[0],
+      inLanguage: "en-US",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -34,6 +251,32 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className="smooth-scroll">
+      <head>
+        {/* Preload critical resources */}
+        <link rel="preload" href="/pk.webp" as="image" type="image/webp" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+
+        {/* Additional SEO meta tags */}
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-TileColor" content="#3b82f6" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+
+        {/* Security headers */}
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+        <meta httpEquiv="X-Frame-Options" content="DENY" />
+        <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
+      </head>
       <body
         className={cn(
           inter.className,
