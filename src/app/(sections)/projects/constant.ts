@@ -7,6 +7,9 @@ export interface ProjectType {
   image: string;
   category?: string;
   featured?: boolean;
+  industry?: string;
+  completionDate?: string;
+  status?: "completed" | "in-progress" | "planned";
 }
 
 export const ProjectData: ProjectType[] = [
@@ -20,6 +23,9 @@ export const ProjectData: ProjectType[] = [
     image: "/projects/carbon-calculator.jpg",
     category: "Full Stack",
     featured: true,
+    industry: "Environmental",
+    completionDate: "2024-01",
+    status: "completed",
   },
   {
     title: "AI Mock Interview",
@@ -37,6 +43,9 @@ export const ProjectData: ProjectType[] = [
     image: "/projects/ai-mock-interview.jpg",
     category: "AI/ML",
     featured: true,
+    industry: "Education",
+    completionDate: "2024-02",
+    status: "completed",
   },
   {
     title: "DealDiscover",
@@ -54,6 +63,9 @@ export const ProjectData: ProjectType[] = [
     github: "https://github.com/medkira/DealDiscover_vue",
     image: "/projects/deal-discover.jpg",
     category: "Frontend",
+    industry: "Travel",
+    completionDate: "2023-12",
+    status: "completed",
   },
   {
     title: "Email Reply Agent",
@@ -71,6 +83,9 @@ export const ProjectData: ProjectType[] = [
     github: "#",
     image: "/projects/email-reply-agent.jpg",
     category: "AI/ML",
+    industry: "Productivity",
+    completionDate: "2024-03",
+    status: "completed",
   },
   {
     title: "E-waste Management",
@@ -81,5 +96,8 @@ export const ProjectData: ProjectType[] = [
     github: "https://github.com/khairiEsprit/e-waste_symfony",
     image: "/projects/e-waste.jpg",
     category: "Blockchain",
+    industry: "Environmental",
+    completionDate: "2023-11",
+    status: "completed",
   },
 ];

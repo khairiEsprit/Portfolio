@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ProjectData } from "./constant";
-import ProjectCard from "@/components/ProjectCard";
+import FilterableProjectGallery from "@/components/FilterableProjectGallery";
 import AnimatedSection from "@/components/animations/AnimatedSection";
 
 const containerVariants = {
@@ -53,18 +53,9 @@ function ProjectsPage() {
             <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full" />
           </motion.div>
 
-          {/* Projects Grid */}
+          {/* Filterable Projects Gallery */}
           <AnimatedSection animation="fadeUp" delay={0.3}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-10">
-              {ProjectData.map((project, index) => (
-                <ProjectCard
-                  key={project.title}
-                  project={project}
-                  index={index}
-                  className="h-full"
-                />
-              ))}
-            </div>
+            <FilterableProjectGallery projects={ProjectData} />
           </AnimatedSection>
 
           {/* Call to Action */}
