@@ -49,9 +49,12 @@ export const seoConfig = {
 
   // Open Graph Images
   images: {
-    ogImage: "/og-image.jpg",
+    ogImage: "/og-image.jpg", // TODO: Create this image (1200x630)
     profileImage: "/pk.webp",
     fallbackImage: "/pk.webp",
+    favicon: "/favicon.ico",
+    appleTouchIcon: "/apple-touch-icon.png",
+    logo: "/logo.png", // TODO: Create a logo file for search results
   },
 
   // Verification Codes (Add these after setting up search console accounts)

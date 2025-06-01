@@ -128,9 +128,15 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    icon: [{ url: "/favicon.ico", sizes: "any", type: "image/x-icon" }],
+    apple: [{ url: "/pk.webp", sizes: "180x180", type: "image/webp" }],
+    other: [
+      {
+        rel: "mask-icon",
+        url: "/favicon.ico",
+        color: "#3b82f6",
+      },
+    ],
   },
   metadataBase: new URL("https://www.mohamedkhairibouzid.engineer/"),
 };
@@ -213,6 +219,43 @@ const structuredData = {
       },
     },
     {
+      "@type": "Organization",
+      "@id": "https://www.mohamedkhairibouzid.engineer/#organization",
+      name: "Mohamed Khairi Bouzid Portfolio",
+      alternateName: "Khairi Bouzid Portfolio",
+      url: "https://www.mohamedkhairibouzid.engineer/",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.mohamedkhairibouzid.engineer/logo.png",
+        width: 600,
+        height: 600,
+        caption: "Mohamed Khairi Bouzid Logo",
+      },
+      image: {
+        "@type": "ImageObject",
+        url: "https://www.mohamedkhairibouzid.engineer/og-image.jpg",
+        width: 1200,
+        height: 630,
+      },
+      sameAs: [
+        "https://github.com/khairiEsprit",
+        "https://www.linkedin.com/in/mohamed-khairi-bouzid-a32753231/",
+      ],
+      founder: {
+        "@id": "https://www.mohamedkhairibouzid.engineer/#person",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "khairibouzid95@gmail.com",
+        contactType: "professional inquiries",
+      },
+      description:
+        "Professional portfolio website of Mohamed Khairi Bouzid, showcasing full-stack development projects and technical expertise.",
+      foundingDate: "2024-01-01",
+      keywords:
+        "Full Stack Developer, Web Development, React, Next.js, Portfolio",
+    },
+    {
       "@type": "WebPage",
       "@id": "https://www.mohamedkhairibouzid.engineer/#webpage",
       url: "https://www.mohamedkhairibouzid.engineer/",
@@ -240,10 +283,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="smooth-scroll">
       <head>
-        {/* Favicon */}
+        {/* Favicon - Multiple formats for maximum compatibility */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
+        <meta name="msapplication-TileImage" content="/favicon.ico" />
 
         {/* Preload critical resources */}
         <link rel="preload" href="/pk.webp" as="image" type="image/webp" />
