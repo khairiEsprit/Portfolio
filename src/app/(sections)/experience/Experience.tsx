@@ -59,8 +59,8 @@ export default Experience;
 const Data = [
   {
     name: "Hortensia Agency",
-    logo: "https://hortensia-agency.com/wp-content/uploads/2024/10/Logo-Hortensia-Dark-Horizontal.png",
-    timeSpan: "06/2023 - 08/2023",
+    logo: "/experience/HortensiaLogo.jpeg", // Updated path
+    timeSpan: "juin 2023 - aout 2023",
     role: "FullStack Developer (Internship)",
     about1: "Designed and developed an educational platform",
     about2: "Implemented advanced content management",
@@ -68,9 +68,9 @@ const Data = [
   },
   {
     name: "WS Consulting.",
-    logo: "https://media.licdn.com/dms/image/C560BAQE2ePsj1ANUvw/company-logo_200_200/0/1630604444607?e=1724284800&v=beta&t=WUwg8mwCSr_ZK6j4Cf9CvWilXigeWJxb7B0SQMIaF2E",
-    timeSpan: "Feb 2024 - Current",
-    role: "Software Developer Intern",
+    logo: "/experience/SwConsultingLogo.jpeg", // Updated path
+    timeSpan: "Feb 2024 - Juin 2024",
+    role: "Software Developer (PFE)",
     about1: "Creaction of an intuitive user interface with vue Js.",
     about2: "Creation of a conversationnel chatbot using Rasa Platform",
     about3:

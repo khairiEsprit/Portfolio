@@ -234,15 +234,38 @@
   overflow: hidden;
 }
 
-/* Enhanced hover effects */
+/* Enhanced hover effects - optimized for mobile */
 .project-card:hover {
   transform: translateY(-1px) translateZ(0);
 }
 
-/* Optimized backdrop blur */
+/* Mobile-specific hover optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .project-card:hover {
+    transform: none;
+  }
+
+  /* Disable hover effects on touch devices */
+  .hover\:scale-105:hover {
+    transform: none !important;
+  }
+
+  .hover\:shadow-lg:hover {
+    box-shadow: none !important;
+  }
+}
+
+/* Optimized backdrop blur - reduced on mobile */
 .backdrop-blur-optimized {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+}
+
+@media (max-width: 768px) {
+  .backdrop-blur-optimized {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
 }
 
 /* Responsive layout improvements */
@@ -260,6 +283,55 @@
 @media (min-width: 1280px) {
   .main-content-container {
     padding-left: 5rem; /* Larger padding for XL screens */
+  }
+}
+
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+  /* Force hardware acceleration for smooth animations */
+  .motion-safe\:animate-pulse,
+  .animate-blob,
+  [data-framer-motion] {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Reduce animation complexity on mobile */
+  .animate-blob {
+    animation-duration: 8s !important;
+    animation-timing-function: ease-in-out !important;
+  }
+
+  /* Optimize text rendering on mobile */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+  }
+
+  /* Reduce motion for better performance */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Optimize scrolling performance */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Reduce layout shifts */
+  img {
+    height: auto;
+    max-width: 100%;
   }
 }
 

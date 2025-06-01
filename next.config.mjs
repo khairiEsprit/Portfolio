@@ -14,14 +14,35 @@ const nextConfig = {
         hostname: "www.svgrepo.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.jsdelivr.net",
+        pathname: "/**",
+      },
     ],
   },
   experimental: {
     optimizePackageImports: ["framer-motion", "lucide-react"],
+    // Enable modern bundling for better performance
+    turbo: {
+      rules: {
+        "*.svg": {
+          loaders: ["@svgr/webpack"],
+          as: "*.js",
+        },
+      },
+    },
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
+  // Performance optimizations
+  poweredByHeader: false,
+  compress: true,
+  // Optimize for mobile performance
+  swcMinify: true,
+  // Enable static optimization
+  output: "standalone",
 };
 
 export default nextConfig;

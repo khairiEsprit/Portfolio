@@ -52,7 +52,7 @@ export default Education;
 const Data = [
   {
     name: "ESPRIT",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Esprit_Logo.svg/1200px-Esprit_Logo.svg.png",
+    logo: "/experience/EspritLogo.png", // Updated path
     timeSpan: "2024 - Present",
     department: "Computer and Information Engineering",
     course: "Engineering Cycle",

@@ -1,5 +1,24 @@
 import NextImage from "@/components/NextImage";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+
+// Mobile detection hook
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  return isMobile;
+};
 
 export const FrontendSkills = [
   {
@@ -144,10 +163,53 @@ export const LanguageSkills = [
 ];
 
 function SkillCategory({ skills }: { skills: any[] }) {
+  const isMobile = useIsMobile();
+
+  // Mobile-optimized animation variants
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: isMobile ? 0.02 : 0.05, // Faster stagger on mobile
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: isMobile ? 10 : 20, // Reduced movement on mobile
+      // Remove scale on mobile to prevent layout shifts
+      ...(isMobile ? {} : { scale: 0.9 }),
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      ...(isMobile ? {} : { scale: 1 }),
+      transition: {
+        duration: isMobile ? 0.3 : 0.4, // Faster on mobile
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
   return (
-    <div className="my-5 flex flex-wrap gap-5 md:w-[700px]">
+    <motion.div
+      className="my-5 flex flex-wrap gap-5 md:w-[700px]"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {skills.map((skill, index) => (
-        <div key={index}>
+        <motion.div
+          key={index}
+          variants={itemVariants}
+          style={{
+            // Force hardware acceleration for smooth animations
+            willChange: "transform, opacity",
+            transform: "translateZ(0)",
+          }}
+        >
           <Button
             variant="secondary"
             className="p-3 h-12 rounded-full flex justify-center drop-shadow-sm items-center gap-2"
@@ -158,12 +220,13 @@ function SkillCategory({ skills }: { skills: any[] }) {
               height={30}
               alt={skill?.name}
               className=""
+              loading={index < 6 ? "eager" : "lazy"} // Prioritize first 6 images
             />
             <span className="animate_in">{skill?.name}</span>
           </Button>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
 

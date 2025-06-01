@@ -50,7 +50,7 @@ export const Data = [
     name: "Khairi bouzid",
     designation: "Connect On github",
     image: "https://www.svgrepo.com/show/475654/github-color.svg",
-    link: "https://github.com/khairibzd",
+    link: "https://github.com/khairiEsprit",
   },
   {
     id: 3,

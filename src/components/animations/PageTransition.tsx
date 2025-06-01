@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { ReactNode } from "react";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
+import { ReactNode, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 interface PageTransitionProps {
@@ -9,57 +9,93 @@ interface PageTransitionProps {
   className?: string;
 }
 
-const pageVariants = {
+// Mobile detection hook
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  return isMobile;
+};
+
+// Optimized variants for mobile performance
+const getMobileOptimizedVariants = (isMobile: boolean) => ({
   initial: {
     opacity: 0,
-    y: 20,
-    scale: 0.98,
+    y: isMobile ? 10 : 20, // Reduced movement on mobile
+    // Remove scale on mobile to prevent layout shifts
+    ...(isMobile ? {} : { scale: 0.98 }),
   },
   in: {
     opacity: 1,
     y: 0,
-    scale: 1,
+    ...(isMobile ? {} : { scale: 1 }),
   },
   out: {
     opacity: 0,
-    y: -20,
-    scale: 1.02,
+    y: isMobile ? -10 : -20,
+    ...(isMobile ? {} : { scale: 1.02 }),
   },
-};
+});
 
-const pageTransition = {
-  type: "tween",
-  ease: [0.16, 1, 0.3, 1], // Custom easing curve
-  duration: 0.4,
-};
+const getMobileOptimizedTransition = (isMobile: boolean) => ({
+  type: "tween" as const,
+  ease: [0.16, 1, 0.3, 1],
+  duration: isMobile ? 0.25 : 0.4, // Faster transitions on mobile
+});
 
-export default function PageTransition({ children, className }: PageTransitionProps) {
+export default function PageTransition({
+  children,
+  className,
+}: PageTransitionProps) {
   const pathname = usePathname();
+  const isMobile = useIsMobile();
+  const pageVariants = getMobileOptimizedVariants(isMobile);
+  const pageTransition = getMobileOptimizedTransition(isMobile);
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <motion.div
-        key={pathname}
-        initial="initial"
-        animate="in"
-        exit="out"
-        variants={pageVariants}
-        transition={pageTransition}
-        className={className}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <MotionConfig reducedMotion="user">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={pathname}
+          initial="initial"
+          animate="in"
+          exit="out"
+          variants={pageVariants}
+          transition={pageTransition}
+          className={className}
+          style={{
+            // Force hardware acceleration for smooth animations
+            willChange: "transform, opacity",
+            transform: "translateZ(0)",
+          }}
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
+    </MotionConfig>
   );
 }
 
-// Alternative slide transition
-export function SlidePageTransition({ children, className }: PageTransitionProps) {
+// Alternative slide transition - optimized for mobile
+export function SlidePageTransition({
+  children,
+  className,
+}: PageTransitionProps) {
   const pathname = usePathname();
+  const isMobile = useIsMobile();
 
   const slideVariants = {
     initial: {
-      x: 300,
+      x: isMobile ? 100 : 300, // Reduced movement on mobile
       opacity: 0,
     },
     in: {
@@ -67,67 +103,89 @@ export function SlidePageTransition({ children, className }: PageTransitionProps
       opacity: 1,
     },
     out: {
-      x: -300,
+      x: isMobile ? -100 : -300,
       opacity: 0,
     },
   };
 
+  const transition = getMobileOptimizedTransition(isMobile);
+
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <motion.div
-        key={pathname}
-        initial="initial"
-        animate="in"
-        exit="out"
-        variants={slideVariants}
-        transition={pageTransition}
-        className={className}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <MotionConfig reducedMotion="user">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={pathname}
+          initial="initial"
+          animate="in"
+          exit="out"
+          variants={slideVariants}
+          transition={transition}
+          className={className}
+          style={{
+            willChange: "transform, opacity",
+            transform: "translateZ(0)",
+          }}
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
+    </MotionConfig>
   );
 }
 
-// Fade transition with blur effect
-export function BlurPageTransition({ children, className }: PageTransitionProps) {
+// Fade transition with blur effect - disabled blur on mobile for performance
+export function BlurPageTransition({
+  children,
+  className,
+}: PageTransitionProps) {
   const pathname = usePathname();
+  const isMobile = useIsMobile();
 
   const blurVariants = {
     initial: {
       opacity: 0,
-      filter: "blur(10px)",
-      scale: 1.1,
+      // Disable blur on mobile for better performance
+      ...(isMobile ? {} : { filter: "blur(10px)" }),
+      // Remove scale on mobile to prevent layout shifts
+      ...(isMobile ? {} : { scale: 1.1 }),
     },
     in: {
       opacity: 1,
-      filter: "blur(0px)",
-      scale: 1,
+      ...(isMobile ? {} : { filter: "blur(0px)" }),
+      ...(isMobile ? {} : { scale: 1 }),
     },
     out: {
       opacity: 0,
-      filter: "blur(10px)",
-      scale: 0.9,
+      ...(isMobile ? {} : { filter: "blur(10px)" }),
+      ...(isMobile ? {} : { scale: 0.9 }),
     },
   };
 
+  const transition = {
+    ...getMobileOptimizedTransition(isMobile),
+    duration: isMobile ? 0.3 : 0.6, // Much faster on mobile
+  };
+
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <motion.div
-        key={pathname}
-        initial="initial"
-        animate="in"
-        exit="out"
-        variants={blurVariants}
-        transition={{
-          ...pageTransition,
-          duration: 0.6,
-        }}
-        className={className}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <MotionConfig reducedMotion="user">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={pathname}
+          initial="initial"
+          animate="in"
+          exit="out"
+          variants={blurVariants}
+          transition={transition}
+          className={className}
+          style={{
+            willChange: isMobile ? "opacity" : "transform, opacity, filter",
+            transform: "translateZ(0)",
+          }}
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
+    </MotionConfig>
   );
 }
 
@@ -138,10 +196,10 @@ interface LoadingTransitionProps {
   className?: string;
 }
 
-export function LoadingTransition({ 
-  children, 
-  loading = false, 
-  className 
+export function LoadingTransition({
+  children,
+  loading = false,
+  className,
 }: LoadingTransitionProps) {
   return (
     <AnimatePresence mode="wait">
@@ -167,7 +225,7 @@ export function LoadingTransition({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          transition={pageTransition}
+          transition={PageTransition}
           className={className}
         >
           {children}
@@ -233,14 +291,15 @@ export function StaggeredReveal({ children, className }: PageTransitionProps) {
         variants={containerVariants}
         className={className}
       >
-        {Array.isArray(children) 
-          ? children.map((child, index) => (
-              <motion.div key={index} variants={itemVariants}>
-                {child}
-              </motion.div>
-            ))
-          : <motion.div variants={itemVariants}>{children}</motion.div>
-        }
+        {Array.isArray(children) ? (
+          children.map((child, index) => (
+            <motion.div key={index} variants={itemVariants}>
+              {child}
+            </motion.div>
+          ))
+        ) : (
+          <motion.div variants={itemVariants}>{children}</motion.div>
+        )}
       </motion.div>
     </AnimatePresence>
   );
