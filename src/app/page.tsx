@@ -51,10 +51,10 @@ export default function Home() {
         aria-hidden="true"
       />
 
-      <div className="container mx-auto px-6 flex items-center flex-col-reverse lg:flex-row gap-12 lg:gap-16">
+      <div className="responsive-container balanced-layout main-content-container">
         {/* Content Section */}
         <section
-          className="flex flex-col gap-6 text-left lg:w-1/2 2xl:w-1/3"
+          className="flex flex-col gap-6 text-left content-section"
           aria-labelledby="hero-heading"
         >
           <StaggeredContainer className="flex flex-col gap-6">
@@ -199,10 +199,10 @@ export default function Home() {
         </section>
 
         {/* Profile Image Section */}
-        <aside aria-label="Profile image" className="relative">
+        <aside aria-label="Profile image" className="image-section">
           <AnimatedSection animation="scaleIn" delay={0.7} className="relative">
             <motion.div
-              className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96"
+              className="relative w-64 h-64 md:w-80 md:h-80 lg:w-72 lg:h-72 xl:w-80 xl:h-80 2xl:w-96 2xl:h-96 mx-auto lg:mx-0"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >

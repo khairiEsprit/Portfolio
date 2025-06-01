@@ -11,13 +11,12 @@ import AnimatedTooltip from "./Aceternety/animated-tooltip";
 
 export default function Social() {
   return (
-    <section className="md:fixed xl:bottom-40 xl:left-4 2xl:bottom-80 2xl:left-10 hidden lg:flex lg:flex-col gap-3 z-20">
+    <section className="social-sidebar fixed bottom-20 left-4 xl:bottom-40 xl:left-6 2xl:bottom-80 2xl:left-10 hidden lg:flex lg:flex-col gap-3 z-20 transition-all duration-300">
       {Data.map((item, index) => {
         return (
           <Link href={item.link} passHref={true} target="_blank" key={index}>
-          <AnimatedTooltip  item={item} />
-              </Link>
-
+            <AnimatedTooltip item={item} />
+          </Link>
         );
       })}
     </section>
@@ -27,14 +26,13 @@ export default function Social() {
 export const PhoneSocial = () => {
   return (
     <div className="flex flex-row justify-center space-x-5 mt-2 sm:hidden">
-     {Data.map((item, index) => {
-  return (
-    <Link href={item.link} passHref={true} target="_blank" key={index}>
-    <AnimatedTooltip  item={item} />
-        </Link>
-
-  );
-})} 
+      {Data.map((item, index) => {
+        return (
+          <Link href={item.link} passHref={true} target="_blank" key={index}>
+            <AnimatedTooltip item={item} />
+          </Link>
+        );
+      })}
     </div>
   );
 };
@@ -44,24 +42,21 @@ export const Data = [
     id: 1,
     name: "Khairi bouzid",
     designation: "Connect On linkedIn",
-    image:
-      "https://www.svgrepo.com/show/475661/linkedin-color.svg",
+    image: "https://www.svgrepo.com/show/475661/linkedin-color.svg",
     link: "https://www.linkedin.com/in/mohamed-khairi-bouzid-a32753231/",
   },
   {
     id: 2,
     name: "Khairi bouzid",
     designation: "Connect On github",
-    image:
-      "https://www.svgrepo.com/show/475654/github-color.svg",
+    image: "https://www.svgrepo.com/show/475654/github-color.svg",
     link: "https://github.com/khairibzd",
   },
   {
     id: 3,
     name: "Khairi bouzid",
     designation: "Mail Us",
-    image:
-      "https://www.svgrepo.com/show/19352/email.svg",
+    image: "https://www.svgrepo.com/show/19352/email.svg",
     link: "mailto:khairibouzid95@gmail.com",
   },
   // {

@@ -95,6 +95,28 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  /* Responsive layout utilities */
+  .responsive-container {
+    @apply container mx-auto px-6 xl:px-20;
+  }
+
+  .balanced-layout {
+    @apply flex items-center flex-col-reverse lg:flex-row gap-8 md:gap-12 lg:gap-16 xl:gap-20;
+  }
+
+  .content-section {
+    @apply w-full md:w-4/5 lg:w-3/5 xl:w-1/2 2xl:w-3/5 lg:max-w-2xl xl:max-w-3xl mx-auto lg:mx-0;
+  }
+
+  .image-section {
+    @apply relative flex-shrink-0;
+  }
+
+  /* Better spacing for different screen sizes */
+  .main-content-container {
+    @apply transition-all duration-300 ease-in-out;
+  }
 }
 
 /* Enhanced animations */
@@ -188,4 +210,80 @@
   transition: color 0.2s ease, background-color 0.2s ease,
     border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease,
     opacity 0.2s ease;
+}
+
+/* Performance optimizations for 60fps animations */
+.project-card {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.project-card-image {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Line clamp utility for consistent text truncation */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Enhanced hover effects */
+.project-card:hover {
+  transform: translateY(-1px) translateZ(0);
+}
+
+/* Optimized backdrop blur */
+.backdrop-blur-optimized {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Responsive layout improvements */
+@media (min-width: 1024px) {
+  .main-content-container {
+    padding-left: 4rem; /* Account for social sidebar */
+  }
+
+  /* Ensure social sidebar doesn't interfere with content */
+  .social-sidebar {
+    transform: translateX(0);
+  }
+}
+
+@media (min-width: 1280px) {
+  .main-content-container {
+    padding-left: 5rem; /* Larger padding for XL screens */
+  }
+}
+
+@media (min-width: 1536px) {
+  .main-content-container {
+    padding-left: 6rem; /* Even larger padding for 2XL screens */
+  }
+}
+
+/* Ensure content doesn't get too wide on very large screens */
+@media (min-width: 1920px) {
+  .content-section {
+    max-width: 60rem;
+  }
+}
+
+/* Handle smaller large screens better */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .main-content-container {
+    padding-left: 3rem;
+    padding-right: 1rem;
+  }
+
+  .content-section {
+    max-width: 28rem;
+  }
 }
