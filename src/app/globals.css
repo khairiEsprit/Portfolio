@@ -98,7 +98,7 @@
 
   /* Responsive layout utilities */
   .responsive-container {
-    @apply container mx-auto px-6 xl:px-20;
+    @apply container mx-auto px-2 sm:px-4 md:px-6 xl:px-20;
   }
 
   .balanced-layout {
@@ -309,6 +309,37 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeSpeed;
+  }
+
+  /* Full width project cards on mobile */
+  .responsive-container {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+    max-width: 100vw !important;
+  }
+
+  /* Override container constraints on mobile */
+  .container {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+    max-width: 100vw !important;
+  }
+
+  /* Ensure project cards take full width */
+  .project-card {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Force full width for project grid */
+  .grid {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Remove any card margins on mobile */
+  .project-card .card {
+    margin: 0 !important;
   }
 
   /* Reduce motion for better performance */

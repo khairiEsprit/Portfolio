@@ -114,7 +114,7 @@ export default function FilterableProjectGallery({
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className={cn("space-y-8", className)}
+      className={cn("space-y-4 md:space-y-8", className)}
     >
       {/* Header Controls */}
       <motion.div variants={headerVariants} className="space-y-4">
@@ -205,10 +205,10 @@ export default function FilterableProjectGallery({
               animate="visible"
               exit="hidden"
               className={cn(
-                "grid gap-8",
+                "grid w-full",
                 viewMode === "grid"
-                  ? "grid-cols-1 lg:grid-cols-2 xl:gap-10"
-                  : "grid-cols-1 gap-6"
+                  ? "grid-cols-1 lg:grid-cols-2 gap-1 sm:gap-2 md:gap-4 lg:gap-6 xl:gap-8"
+                  : "grid-cols-1 gap-1 sm:gap-2 md:gap-4"
               )}
             >
               {filteredAndSortedProjects.map((project, index) => (

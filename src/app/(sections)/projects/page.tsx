@@ -31,12 +31,12 @@ const headerVariants = {
 function ProjectsPage() {
   return (
     <div className="min-h-screen py-20">
-      <div className="responsive-container">
+      <div className="w-full px-1 sm:px-4 md:px-6 lg:px-8 xl:px-20 mx-auto">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="space-y-16"
+          className="space-y-8 md:space-y-16"
         >
           {/* Header Section */}
           <motion.div
