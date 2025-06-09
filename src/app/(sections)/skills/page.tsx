@@ -1,7 +1,6 @@
-"use client";
-
 import React from "react";
 import { Frontend, Backend, Tools, AIML, Languages } from "./constant";
+import SkillsClient from "./SkillsClient";
 
 interface SkillComponents {
   [key: string]: () => JSX.Element;
@@ -33,29 +32,15 @@ const data = [
   },
 ];
 
-const Skills = () => {
-  return (
-    <div className="pb-20">
-      <div className="flex flex-col items-center justify-center py-5">
-        <p className="font-bold text-3xl">Skills</p>
-        <div className="h-[2px] w-20 bg-blue-500 rounded-full my-1"></div>
-      </div>
-      <div className="flex flex-col justify-center items-center px-3">
-        {data.map(({ label }) => (
-          <div key={label} className="flex flex-col m-1">
-            <div className="flex flex-col">
-              <span className="animate_in text-xl mt-1">{label}</span>
-              <div className="w-16 h-[1px] bg-blue-500 rounded-full my-1"></div>
-            </div>
-
-            <div className="flex flex-wrap justify-center items-center gap-5">
-              {skillComponents[label] && <div>{skillComponents[label]()}</div>}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+export const metadata = {
+  title: "Skills | Mohamed Khairi Bouzid",
+  description:
+    "Skills of Mohamed Khairi Bouzid, full stack developer and computer engineering student.",
+  alternates: {
+    canonical: "https://www.mohamedkhairibouzid.engineer/skills",
+  },
 };
 
-export default Skills;
+export default function Skills() {
+  return <SkillsClient />;
+}
