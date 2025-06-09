@@ -41,3 +41,6 @@ Disallow: /
 
 # Host directive (replace with your actual domain)
 Host: https://www.mohamedkhairibouzid.engineer/
+
+User-agent: *
+Disallow: /search

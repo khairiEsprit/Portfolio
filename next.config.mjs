@@ -22,6 +22,30 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "mohamedkhairibouzid.engineer" }],
+        destination: "https://www.mohamedkhairibouzid.engineer/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "http://mohamedkhairibouzid.engineer" }],
+        destination: "https://www.mohamedkhairibouzid.engineer/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [
+          { type: "host", value: "http://www.mohamedkhairibouzid.engineer" },
+        ],
+        destination: "https://www.mohamedkhairibouzid.engineer/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
