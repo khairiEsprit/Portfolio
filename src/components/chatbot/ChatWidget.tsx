@@ -5,13 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Loader2, Bot, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import ChatProjectCard, { ProjectCardData } from "./ChatProjectCard";
 
 interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
+  projectCards?: ProjectCardData[];
 }
 
 interface QuickResponse {
@@ -113,6 +114,7 @@ export default function ChatWidget() {
         role: "assistant",
         content: data.response,
         timestamp: new Date(),
+        projectCards: data.projectCards || [],
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
@@ -207,7 +209,7 @@ export default function ChatWidget() {
               </div>
 
               {/* Messages */}
-              <ScrollArea className="flex-1 p-4">
+              <div className="flex-1 p-4 overflow-y-auto">
                 <div className="space-y-4">
                   {messages.map((message) => (
                     <motion.div
@@ -215,29 +217,49 @@ export default function ChatWidget() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
-                      className={`flex ${
-                        message.role === "user"
-                          ? "justify-end"
-                          : "justify-start"
-                      }`}
+                      className="space-y-3"
                     >
+                      {/* Message Bubble */}
                       <div
-                        className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${
+                        className={`flex ${
                           message.role === "user"
-                            ? "bg-blue-600 text-white"
-                            : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                            ? "justify-end"
+                            : "justify-start"
                         }`}
                       >
-                        <div className="flex items-start gap-2">
-                          {message.role === "assistant" && (
-                            <Bot size={16} className="mt-0.5 opacity-70" />
-                          )}
-                          {message.role === "user" && (
-                            <User size={16} className="mt-0.5 opacity-70" />
-                          )}
-                          <div className="flex-1">{message.content}</div>
+                        <div
+                          className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${
+                            message.role === "user"
+                              ? "bg-blue-600 text-white"
+                              : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                          }`}
+                        >
+                          <div className="flex items-start gap-2">
+                            {message.role === "assistant" && (
+                              <Bot size={16} className="mt-0.5 opacity-70" />
+                            )}
+                            {message.role === "user" && (
+                              <User size={16} className="mt-0.5 opacity-70" />
+                            )}
+                            <div className="flex-1">{message.content}</div>
+                          </div>
                         </div>
                       </div>
+
+                      {/* Project Cards */}
+                      {message.role === "assistant" &&
+                        message.projectCards &&
+                        message.projectCards.length > 0 && (
+                          <div className="space-y-2">
+                            {message.projectCards.map((project, index) => (
+                              <ChatProjectCard
+                                key={`${message.id}-project-${index}`}
+                                project={project}
+                                index={index}
+                              />
+                            ))}
+                          </div>
+                        )}
                     </motion.div>
                   ))}
 
@@ -285,7 +307,7 @@ export default function ChatWidget() {
 
                   <div ref={messagesEndRef} />
                 </div>
-              </ScrollArea>
+              </div>
 
               {/* Input */}
               <div className="p-4 border-t">
