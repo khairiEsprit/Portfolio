@@ -34,23 +34,41 @@ Key guidelines:
 - Always maintain a positive, confident tone about Mohamed's capabilities
 - If asked about availability, mention he's open to opportunities
 - For technical questions, provide depth while remaining accessible
+- ALWAYS respond to follow-up questions about projects, even if no project cards are needed
+- When users refer to "these projects", "this project", or "the project", understand they're referring to previously mentioned projects
 
-IMPORTANT: When discussing specific projects, always end your response with project identifiers in this format:
+CRITICAL: When discussing ANY projects, you MUST end your response with project identifiers in this EXACT format:
 [PROJECT_CARDS: project1, project2, project3]
 
-Use these exact project identifiers when relevant:
-- "carbon-calculator" for Carbon Calculator
-- "ai-mock-interview" for AI Mock Interview  
-- "deal-discover" for DealDiscover
-- "email-reply-agent" for Email Reply Agent
-- "e-waste" for E-waste Management
+Use these exact project identifiers:
+- "carbon-calculator" for Carbon Calculator (environmental, React, Node, Express, MongoDB, TypeScript)
+- "ai-mock-interview" for AI Mock Interview (AI/ML, interview prep, Next.js, Prisma, PostgreSQL)
+- "deal-discover" for DealDiscover (travel, recommendation, Vue.js, Pinia, Rasa Platform, Python, MongoDB)
+- "email-reply-agent" for Email Reply Agent (AI, productivity, Python, Flask, HTML, CSS, SQLite)
+- "e-waste" for E-waste Management (environmental, blockchain, Symfony, Python, JavaScript, Solidity, IoT, MySQL)
 
-Examples:
-- If asked about "deals recommendation" or "travel projects" → include "deal-discover"
-- If asked about "AI projects" or "interview" → include "ai-mock-interview"
-- If asked about "environmental projects" → include "carbon-calculator" and "e-waste"
-- If asked about "frontend projects" → include "deal-discover"
-- If asked about "all projects" → include all project identifiers
+MANDATORY project card inclusion rules:
+- ANY question about "projects" → include ALL: [PROJECT_CARDS: carbon-calculator, ai-mock-interview, deal-discover, email-reply-agent, e-waste]
+- Questions about "deals", "recommendation", "travel" → [PROJECT_CARDS: deal-discover]
+- Questions about "AI", "artificial intelligence", "interview" → [PROJECT_CARDS: ai-mock-interview, email-reply-agent]
+- Questions about "environment", "carbon", "sustainability" → [PROJECT_CARDS: carbon-calculator, e-waste]
+- Questions about "frontend", "Vue", "React" → [PROJECT_CARDS: deal-discover, carbon-calculator]
+- Questions about "blockchain", "Symfony" → [PROJECT_CARDS: e-waste]
+- Questions about "Python", "Flask" → [PROJECT_CARDS: email-reply-agent]
+
+FOLLOW-UP QUESTIONS HANDLING:
+- When users ask about "technologies used in these/this project(s)", respond with detailed tech stack info
+- When users ask about "how did you build this", explain the development process
+- When users ask about "challenges faced", discuss technical difficulties and solutions
+- Always provide helpful, detailed answers to follow-up questions
+- Only include [PROJECT_CARDS: ...] when introducing NEW projects, not for follow-up questions about existing ones
+
+EXAMPLE responses:
+Q: "Tell me about your projects"
+A: "I've worked on several exciting projects... [PROJECT_CARDS: carbon-calculator, ai-mock-interview, deal-discover, email-reply-agent, e-waste]"
+
+Q: "What technologies did you use in these projects?" (follow-up)
+A: "Great question! Each project uses different technology stacks. The Carbon Calculator uses React, Node.js, Express, MongoDB, and TypeScript for a full-stack solution. The AI Mock Interview platform is built with Next.js, Prisma, and PostgreSQL for robust data handling..."
 
 Background context:
 - Full-Stack Developer at SW Consulting
@@ -60,7 +78,7 @@ Background context:
 - Multilingual: Arabic (native), English (professional), French (professional)
 - Based in Tunisia, open to remote and international opportunities
 
-When responding, use the provided context about Mohamed's projects and skills to give specific, relevant examples.`;
+Remember: ALWAYS respond helpfully to ALL questions, especially follow-ups about projects!`;
   }
 
   private convertProjectToCardData(project: ProjectType): ProjectCardData {
@@ -81,15 +99,22 @@ When responding, use the provided context about Mohamed's projects and skills to
     cleanResponse: string;
     projectCards: ProjectCardData[];
   } {
+    console.log("Raw AI response:", response); // Debug log
+    
     const projectCardPattern = /\[PROJECT_CARDS:\s*([^\]]+)\]/i;
     const match = response.match(projectCardPattern);
 
     if (!match) {
+      console.log("No PROJECT_CARDS pattern found in response"); // Debug log
       return { cleanResponse: response, projectCards: [] };
     }
 
+    console.log("Found PROJECT_CARDS pattern:", match[1]); // Debug log
+
     const cleanResponse = response.replace(projectCardPattern, "").trim();
     const projectIds = match[1].split(",").map((id) => id.trim().toLowerCase());
+
+    console.log("Parsed project IDs:", projectIds); // Debug log
 
     const projectMap: { [key: string]: ProjectType } = {
       "carbon-calculator": ProjectData.find(
@@ -110,11 +135,91 @@ When responding, use the provided context about Mohamed's projects and skills to
       .filter(Boolean)
       .map((project) => this.convertProjectToCardData(project));
 
+    console.log("Generated project cards:", projectCards); // Debug log
+
     return { cleanResponse, projectCards };
+  }
+
+  // Fallback method to detect if project cards should be shown
+  private shouldShowProjectCards(message: string): ProjectCardData[] {
+    const lowerMessage = message.toLowerCase();
+    
+    // Keywords that should trigger project cards (only for new project introductions)
+    const newProjectKeywords = [
+      'show me projects', 'tell me about projects', 'what projects', 'your projects',
+      'portfolio', 'work you\'ve done', 'built', 'created', 'developed projects'
+    ];
+
+    // Follow-up question keywords that should NOT trigger new project cards
+    const followUpKeywords = [
+      'these project', 'this project', 'the project', 'technologies used',
+      'how did you', 'what technologies', 'tech stack', 'built with',
+      'challenges', 'difficulties', 'implementation', 'approach'
+    ];
+
+    // If it's a follow-up question, don't show project cards
+    const isFollowUp = followUpKeywords.some(keyword => 
+      lowerMessage.includes(keyword)
+    );
+
+    if (isFollowUp) {
+      console.log("Detected follow-up question, not showing project cards");
+      return [];
+    }
+
+    // Only show project cards for new project introductions
+    const isNewProjectQuestion = newProjectKeywords.some(keyword => 
+      lowerMessage.includes(keyword)
+    ) || lowerMessage.includes('project') && !isFollowUp;
+
+    if (!isNewProjectQuestion) {
+      return [];
+    }
+
+    // Return relevant projects based on keywords
+    const allProjectIds = ['carbon-calculator', 'ai-mock-interview', 'deal-discover', 'email-reply-agent', 'e-waste'];
+    
+    const projectMap: { [key: string]: ProjectType } = {
+      "carbon-calculator": ProjectData.find(p => p.title === "Carbon Calculator")!,
+      "ai-mock-interview": ProjectData.find(p => p.title === "AI Mock Interview")!,
+      "deal-discover": ProjectData.find(p => p.title === "DealDiscover")!,
+      "email-reply-agent": ProjectData.find(p => p.title === "Email Reply Agent")!,
+      "e-waste": ProjectData.find(p => p.title === "E-waste Management")!,
+    };
+
+    // Specific matching for new project questions
+    if (lowerMessage.includes('ai') || lowerMessage.includes('artificial') || lowerMessage.includes('interview')) {
+      return ['ai-mock-interview', 'email-reply-agent']
+        .map(id => projectMap[id])
+        .filter(Boolean)
+        .map(project => this.convertProjectToCardData(project));
+    }
+
+    if (lowerMessage.includes('deal') || lowerMessage.includes('travel') || lowerMessage.includes('recommendation')) {
+      return [projectMap['deal-discover']]
+        .filter(Boolean)
+        .map(project => this.convertProjectToCardData(project));
+    }
+
+    if (lowerMessage.includes('environment') || lowerMessage.includes('carbon') || lowerMessage.includes('sustainability')) {
+      return ['carbon-calculator', 'e-waste']
+        .map(id => projectMap[id])
+        .filter(Boolean)
+        .map(project => this.convertProjectToCardData(project));
+    }
+
+    // Default: show all projects for general project questions
+    return allProjectIds
+      .map(id => projectMap[id])
+      .filter(Boolean)
+      .map(project => this.convertProjectToCardData(project));
   }
 
   async processMessage(request: ChatRequest): Promise<ChatResponse> {
     try {
+      console.log("Processing message:", request.message);
+      console.log("Conversation history:", request.conversationHistory);
+
       // Find relevant content using RAG
       const relevantContent = findRelevantContent(request.message, 3);
 
@@ -123,11 +228,7 @@ When responding, use the provided context about Mohamed's projects and skills to
         relevantContent.length > 0
           ? relevantContent
               .map((item) => `${item.title}: ${item.content}`)
-              .join(
-                "\
-\
-"
-              )
+              .join("\n\n")
           : "";
 
       // Build conversation messages
@@ -135,36 +236,47 @@ When responding, use the provided context about Mohamed's projects and skills to
         { role: "system", content: this.systemPrompt },
       ];
 
-      // Add conversation history if provided
-      if (
-        request.conversationHistory &&
-        request.conversationHistory.length > 0
-      ) {
-        messages.push(...request.conversationHistory.slice(-6)); // Keep last 6 messages for context
+      // Add conversation history if provided (keep last 8 messages for better context)
+      if (request.conversationHistory && request.conversationHistory.length > 0) {
+        messages.push(...request.conversationHistory.slice(-8));
       }
 
       // Add current message with context
       const userMessageWithContext = contextStr
-        ? `Context about Mohamed Khairi Bouzid:\
-${contextStr}\
-\
-User question: ${request.message}`
+        ? `Context about Mohamed Khairi Bouzid:\n${contextStr}\n\nUser question: ${request.message}`
         : request.message;
 
       messages.push({ role: "user", content: userMessageWithContext });
 
+      console.log("Messages being sent to AI:", messages);
+
       // Get AI response
       const rawResponse = await this.client.sendMessage(messages);
+      console.log("Raw AI response received:", rawResponse);
+
+      if (!rawResponse || rawResponse.trim().length === 0) {
+        throw new Error("Empty response from AI");
+      }
 
       // Parse response for project cards
-      const { cleanResponse, projectCards } =
-        this.parseProjectCards(rawResponse);
+      const { cleanResponse, projectCards } = this.parseProjectCards(rawResponse);
 
-      return {
+      // If no project cards were found in AI response, use fallback detection
+      let finalProjectCards = projectCards;
+      if (projectCards.length === 0) {
+        console.log("No project cards from AI, trying fallback detection");
+        finalProjectCards = this.shouldShowProjectCards(request.message);
+        console.log("Fallback project cards:", finalProjectCards);
+      }
+
+      const result = {
         response: cleanResponse,
         context: relevantContent,
-        projectCards,
+        projectCards: finalProjectCards,
       };
+
+      console.log("Final response:", result);
+      return result;
     } catch (error) {
       console.error("RecruiterAgent Error:", error);
       return {
