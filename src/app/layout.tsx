@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
-
+import ChatWidget from "@/components/chatbot/ChatWidget";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Social from "@/components/Social";
@@ -348,6 +348,7 @@ export default function RootLayout({
 
               {/* Toast notifications */}
               <Toaster position="top-center" />
+                  <ChatWidget />
             </div>
 
             {/* Enhanced dot pattern */}
