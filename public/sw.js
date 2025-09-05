@@ -1,4 +1,4 @@
-const CACHE_NAME = "portfolio-v1";
+const CACHE_NAME = "portfolio-mobile-v1";
 const STATIC_RESOURCES = [
   "/",
   "/about",
@@ -12,11 +12,22 @@ const STATIC_RESOURCES = [
   "/_next/static/chunks/",
 ];
 
+// Mobile-specific optimizations
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
-      .then((cache) => cache.addAll(STATIC_RESOURCES))
+      .then((cache) => {
+        // Prioritize critical resources for mobile
+        const priorityResources = isMobile() ? 
+          ["/", "/pk.webp", "/favicon.ico"] : 
+          STATIC_RESOURCES;
+        return cache.addAll(priorityResources);
+      })
       .then(() => self.skipWaiting())
   );
 });

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { useRef, ReactNode, memo } from "react";
+import { useRef, ReactNode, memo, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface AnimatedSectionProps {
@@ -70,6 +70,18 @@ const AnimatedSection = memo(function AnimatedSection({
   once = true,
 }: AnimatedSectionProps) {
   const ref = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const isInView = useInView(ref, {
     amount: threshold,
     once,
@@ -78,6 +90,10 @@ const AnimatedSection = memo(function AnimatedSection({
 
   const variants = animationVariants[animation];
 
+  // Reduce animations on mobile for better performance
+  const mobileOptimizedDuration = isMobile ? Math.min(duration, 0.3) : duration;
+  const mobileOptimizedDelay = isMobile ? Math.min(delay, 0.2) : delay;
+
   return (
     <motion.div
       ref={ref}
@@ -85,9 +101,9 @@ const AnimatedSection = memo(function AnimatedSection({
       animate={isInView ? "visible" : "hidden"}
       variants={variants}
       transition={{
-        duration,
-        delay,
-        ease: [0.16, 1, 0.3, 1], // Custom easing for smooth animations
+        duration: mobileOptimizedDuration,
+        delay: mobileOptimizedDelay,
+        ease: isMobile ? "easeOut" : [0.16, 1, 0.3, 1], // Simpler easing on mobile
       }}
       className={cn(className)}
     >

@@ -12,7 +12,8 @@ import AnimatedSection, {
 import Typewriter from "typewriter-effect";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
+import { useIsMobile, useReducedMotion } from "@/hooks/useIsMobile";
 
 // Memoize floating elements to prevent re-renders
 const FloatingElement = memo(function FloatingElement({
@@ -35,6 +36,12 @@ const FloatingElement = memo(function FloatingElement({
 });
 
 export default function HomeClient() {
+  const isMobile = useIsMobile();
+  const prefersReducedMotion = useReducedMotion();
+  
+  // Disable animations if user prefers reduced motion or on mobile
+  const shouldAnimate = !prefersReducedMotion && !isMobile;
+
   return (
     <main className="relative py-20 min-h-[80vh] md:min-h-[85vh] flex items-center justify-center overflow-hidden">
       {/* Background gradient effects */}
@@ -43,32 +50,36 @@ export default function HomeClient() {
         aria-hidden="true"
       />
 
-      {/* Floating background elements */}
-      <FloatingElement
-        className="absolute top-20 left-10 w-20 h-20 bg-blue-200/30 dark:bg-blue-800/30 rounded-full blur-xl"
-        animateProps={{
-          y: [0, -20, 0],
-          x: [0, 10, 0],
-        }}
-        transitionProps={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <FloatingElement
-        className="absolute bottom-20 right-10 w-32 h-32 bg-purple-200/30 dark:bg-purple-800/30 rounded-full blur-xl"
-        animateProps={{
-          y: [0, 20, 0],
-          x: [0, -15, 0],
-        }}
-        transitionProps={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2,
-        }}
-      />
+      {/* Floating background elements - hidden on mobile for better performance */}
+      {shouldAnimate && (
+        <>
+          <FloatingElement
+            className="absolute top-20 left-10 w-20 h-20 bg-blue-200/30 dark:bg-blue-800/30 rounded-full blur-xl"
+            animateProps={{
+              y: [0, -20, 0],
+              x: [0, 10, 0],
+            }}
+            transitionProps={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <FloatingElement
+            className="absolute bottom-20 right-10 w-32 h-32 bg-purple-200/30 dark:bg-purple-800/30 rounded-full blur-xl"
+            animateProps={{
+              y: [0, 20, 0],
+              x: [0, -15, 0],
+            }}
+            transitionProps={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+          />
+        </>
+      )}
 
       <div className="responsive-container balanced-layout main-content-container">
         {/* Content Section */}
@@ -130,8 +141,8 @@ export default function HomeClient() {
                     ],
                     autoStart: true,
                     loop: true,
-                    delay: 50,
-                    deleteSpeed: 30,
+                    delay: isMobile ? 30 : 50, // Faster on mobile
+                    deleteSpeed: isMobile ? 50 : 30, // Faster deletion on mobile
                   }}
                 />
               </h2>
@@ -225,21 +236,25 @@ export default function HomeClient() {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              {/* Animated background rings */}
-              <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-600 opacity-20"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                aria-hidden="true"
-              />
-              <motion.div
-                className="absolute inset-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-600 opacity-15"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                aria-hidden="true"
-              />
+              {/* Animated background rings - disabled on mobile */}
+              {shouldAnimate && (
+                <>
+                  <motion.div
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-600 opacity-20"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    aria-hidden="true"
+                  />
+                  <motion.div
+                    className="absolute inset-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-600 opacity-15"
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                    aria-hidden="true"
+                  />
+                </>
+              )}
 
-              {/* Profile Image */}
+              {/* Profile Image - optimized for mobile */}
               <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/20 dark:border-gray-800/20 shadow-2xl">
                 <Image
                   src="/pk.webp"
@@ -248,7 +263,10 @@ export default function HomeClient() {
                   alt="Professional headshot of Mohamed Khairi Bouzid, a full-stack developer and computer engineering student at ESPRIT"
                   className="w-full h-full object-cover"
                   priority
-                  sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
+                  sizes="(max-width: 480px) 192px, (max-width: 768px) 256px, (max-width: 1024px) 320px, 384px"
+                  quality={isMobile ? 75 : 95}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknybtvelL2lksqsA="
                 />
 
                 {/* Overlay gradient */}
@@ -258,44 +276,50 @@ export default function HomeClient() {
                 />
               </div>
 
-              {/* Enhanced Border Beam */}
-              <BorderBeam
-                size={400}
-                duration={8}
-                delay={2}
-                colorFrom="#3b82f6"
-                colorTo="#8b5cf6"
-                className="absolute inset-0 rounded-full"
-              />
+              {/* Enhanced Border Beam - disabled on mobile */}
+              {shouldAnimate && (
+                <BorderBeam
+                  size={400}
+                  duration={8}
+                  delay={2}
+                  colorFrom="#3b82f6"
+                  colorTo="#8b5cf6"
+                  className="absolute inset-0 rounded-full"
+                />
+              )}
 
-              {/* Floating particles */}
-              <motion.div
-                className="absolute -top-4 -right-4 w-3 h-3 bg-yellow-400 rounded-full"
-                animate={{
-                  y: [0, -10, 0],
-                  opacity: [1, 0.5, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                aria-hidden="true"
-              />
-              <motion.div
-                className="absolute -bottom-4 -left-4 w-2 h-2 bg-blue-400 rounded-full"
-                animate={{
-                  y: [0, 10, 0],
-                  opacity: [1, 0.3, 1],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1,
-                }}
-                aria-hidden="true"
-              />
+              {/* Floating particles - disabled on mobile */}
+              {shouldAnimate && (
+                <>
+                  <motion.div
+                    className="absolute -top-4 -right-4 w-3 h-3 bg-yellow-400 rounded-full"
+                    animate={{
+                      y: [0, -10, 0],
+                      opacity: [1, 0.5, 1],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    aria-hidden="true"
+                  />
+                  <motion.div
+                    className="absolute -bottom-4 -left-4 w-2 h-2 bg-blue-400 rounded-full"
+                    animate={{
+                      y: [0, 10, 0],
+                      opacity: [1, 0.3, 1],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1,
+                    }}
+                    aria-hidden="true"
+                  />
+                </>
+              )}
             </motion.div>
           </AnimatedSection>
         </aside>

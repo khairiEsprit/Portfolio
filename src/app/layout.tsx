@@ -304,6 +304,9 @@ export default function RootLayout({
         {/* Critical resource preloading for faster page loads */}
         <link rel="preload" href="/pk.webp" as="image" type="image/webp" />
         <link rel="preload" href="/assets/CV.pdf" as="document" />
+        
+        {/* Mobile-specific optimizations */}
+        <link rel="preload" href="/pk.webp" as="image" type="image/webp" media="(max-width: 768px)" imageSizes="(max-width: 768px) 256px" />
 
         {/* DNS prefetch for external domains */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -323,11 +326,46 @@ export default function RootLayout({
         <meta httpEquiv="x-dns-prefetch-control" content="on" />
         <meta name="format-detection" content="telephone=no" />
 
-        {/* Performance optimizations */}
+        {/* Mobile-specific performance optimizations */}
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, viewport-fit=cover"
+          content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
         />
+        <meta name="color-scheme" content="light dark" />
+        <meta name="theme-color" content="#3b82f6" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#1e40af" media="(prefers-color-scheme: dark)" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-touch-fullscreen" content="yes" />
+        
+        {/* Reduce layout shift and optimize for mobile */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Prevent FOUC and layout shift */
+            html { font-display: swap; }
+            body { font-display: swap; }
+            img { content-visibility: auto; }
+            
+            /* Mobile-specific optimizations */
+            @media (max-width: 768px) {
+              * { 
+                scroll-behavior: auto !important;
+                animation-duration: 0.2s !important;
+                transition-duration: 0.2s !important;
+              }
+              
+              /* Reduce motion for mobile performance */
+              @media (prefers-reduced-motion: reduce) {
+                *, *::before, *::after {
+                  animation-duration: 0.01ms !important;
+                  animation-iteration-count: 1 !important;
+                  transition-duration: 0.01ms !important;
+                }
+              }
+            }
+          `
+        }} />
         <meta name="color-scheme" content="light dark" />
 
         {/* Structured Data */}
@@ -364,8 +402,8 @@ export default function RootLayout({
               {/* Optimized background effects - reduced complexity */}
               <div className="fixed inset-0 bg-gradient-to-br from-blue-50/20 via-transparent to-purple-50/20 dark:from-blue-950/5 dark:to-purple-950/5 pointer-events-none -z-20" />
 
-              {/* Reduced animated background blobs for better performance */}
-              <div className="fixed top-10 left-1/3 w-[400px] h-[400px] bg-blue-200/10 dark:bg-blue-800/5 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob -z-10" />
+              {/* Reduced animated background blobs - disabled on mobile for better performance */}
+              <div className="hidden md:block fixed top-10 left-1/3 w-[400px] h-[400px] bg-blue-200/10 dark:bg-blue-800/5 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob -z-10" />
               <div className="hidden lg:block fixed top-0 right-4 w-[400px] h-[400px] bg-purple-200/10 dark:bg-purple-800/5 mix-blend-multiply rounded-full filter blur-3xl opacity-50 animate-blob animation-delay-2000 -z-10" />
 
               {/* Page content with transitions */}
