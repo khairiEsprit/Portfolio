@@ -13,11 +13,20 @@ import PageTransition from "@/components/animations/PageTransition";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+// Optimized font loading with display swap for better performance
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  preload: true,
+});
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-poppins",
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -292,14 +301,34 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
         <meta name="msapplication-TileImage" content="/favicon.ico" />
 
-        {/* Preload critical resources */}
+        {/* Critical resource preloading for faster page loads */}
         <link rel="preload" href="/pk.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/assets/CV.pdf" as="document" />
+
+        {/* DNS prefetch for external domains */}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://vercel.live" />
+
+        {/* Preconnect to critical domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+
+        {/* Resource hints for better performance */}
+        <meta httpEquiv="x-dns-prefetch-control" content="on" />
+        <meta name="format-detection" content="telephone=no" />
+
+        {/* Performance optimizations */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+        <meta name="color-scheme" content="light dark" />
 
         {/* Structured Data */}
         <script

@@ -7,23 +7,28 @@ export default function Loading() {
       <main className="relative py-20 min-h-[80vh] md:min-h-[85vh] flex items-center justify-center">
         <div className="container mx-auto px-6 flex items-center flex-col-reverse lg:flex-row gap-12 lg:gap-16">
           {/* Content Section Skeleton */}
-          <section className="flex flex-col gap-6 text-left lg:w-1/2 2xl:w-1/3">
+          <section className="flex flex-col gap-6 text-left lg:w-1/2 2xl:w-1/3 animate-pulse">
             {/* Greeting */}
-            <Skeleton className="h-8 w-32" />
-            
+            <Skeleton className="h-8 w-32 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600" />
+
             {/* Name */}
-            <Skeleton className="h-12 md:h-16 w-full max-w-md" />
-            
+            <Skeleton className="h-12 md:h-16 w-full max-w-md bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600" />
+
             {/* Role */}
-            <Skeleton className="h-8 md:h-10 w-3/4" />
-            
+            <Skeleton className="h-8 md:h-10 w-3/4 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600" />
+
             {/* Description */}
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-full bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600" />
+              <Skeleton className="h-4 w-4/5 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600" />
+              <Skeleton className="h-4 w-3/4 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600" />
+            </div>
             <div className="space-y-2">
               <Skeleton className="h-6 w-full" />
               <Skeleton className="h-6 w-full" />
               <Skeleton className="h-6 w-3/4" />
             </div>
-            
+
             {/* Social Links */}
             <div className="flex gap-4">
               <Skeleton className="h-10 w-10 rounded-full" />
@@ -31,7 +36,7 @@ export default function Loading() {
               <Skeleton className="h-10 w-10 rounded-full" />
               <Skeleton className="h-10 w-10 rounded-full" />
             </div>
-            
+
             {/* Action Buttons */}
             <div className="flex flex-row justify-center md:justify-start gap-4 md:gap-6 mt-6">
               <Skeleton className="h-12 w-32" />

@@ -1,15 +1,39 @@
+import { Metadata } from "next";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Experience from "./Experience";
 import Education from "./Education";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Experience | Mohamed Khairi Bouzid",
   description:
-    "Professional experience and education of Mohamed Khairi Bouzid.",
+    "Professional experience and educational background of Mohamed Khairi Bouzid, including work history and academic achievements.",
+  keywords: [
+    "Professional Experience",
+    "Education",
+    "ESPRIT",
+    "Work History",
+    "Academic Background",
+    "Career",
+  ],
   alternates: {
     canonical: "https://www.mohamedkhairibouzid.engineer/experience",
   },
+  openGraph: {
+    title: "Experience - Mohamed Khairi Bouzid",
+    description:
+      "Professional experience and educational background of a full-stack developer.",
+    url: "https://www.mohamedkhairibouzid.engineer/experience",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
+
+// Force static generation at build time
+export const dynamic = "force-static";
+export const revalidate = false;
 
 function page() {
   return (
