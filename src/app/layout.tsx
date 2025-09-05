@@ -115,17 +115,6 @@ export const metadata: Metadata = {
   category: "technology",
   classification: "Portfolio Website",
   referrer: "origin-when-cross-origin",
-  colorScheme: "dark light",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#3b82f6" },
-    { media: "(prefers-color-scheme: dark)", color: "#1e40af" },
-  ],
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
   manifest: "/manifest.json",
   icons: {
     icon: [{ url: "/favicon.ico", sizes: "any", type: "image/x-icon" }],
@@ -139,6 +128,18 @@ export const metadata: Metadata = {
     ],
   },
   metadataBase: new URL("https://www.mohamedkhairibouzid.engineer/"),
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  colorScheme: "dark light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#3b82f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#1e40af" },
+  ],
 };
 
 // Structured Data for SEO
@@ -323,24 +324,23 @@ export default function RootLayout({
           "font-sans antialiased"
         )}
       >
-        <ThemeProvider attribute="class">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <TooltipProvider delayDuration={0}>
             <div className="relative overflow-hidden min-h-screen bg-background">
-              {/* Enhanced background effects */}
-              <div className="fixed inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-purple-50/30 dark:from-blue-950/10 dark:to-purple-950/10 pointer-events-none -z-20" />
+              {/* Optimized background effects - reduced complexity */}
+              <div className="fixed inset-0 bg-gradient-to-br from-blue-50/20 via-transparent to-purple-50/20 dark:from-blue-950/5 dark:to-purple-950/5 pointer-events-none -z-20" />
 
-              {/* Animated background blobs */}
-              <div className="fixed top-10 left-1/3 w-[500px] h-[500px] bg-blue-200/20 dark:bg-blue-800/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob -z-10" />
-              <div className="hidden md:block fixed top-0 right-4 w-[500px] h-[500px] bg-purple-200/20 dark:bg-purple-800/10 mix-blend-multiply rounded-full filter blur-3xl opacity-70 animate-blob animation-delay-2000 -z-10" />
-              <div className="fixed bottom-20 left-20 w-[500px] h-[500px] bg-pink-200/20 dark:bg-pink-800/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000 -z-10" />
-              <div className="hidden md:block fixed -bottom-8 right-1/4 w-[500px] h-[500px] bg-green-200/20 dark:bg-green-800/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000 -z-10" />
+              {/* Reduced animated background blobs for better performance */}
+              <div className="fixed top-10 left-1/3 w-[400px] h-[400px] bg-blue-200/10 dark:bg-blue-800/5 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob -z-10" />
+              <div className="hidden lg:block fixed top-0 right-4 w-[400px] h-[400px] bg-purple-200/10 dark:bg-purple-800/5 mix-blend-multiply rounded-full filter blur-3xl opacity-50 animate-blob animation-delay-2000 -z-10" />
 
               {/* Page content with transitions */}
               <PageTransition>{children}</PageTransition>
-
-              {/* Analytics and tracking */}
-              <Analytics />
-              <SpeedInsights />
 
               {/* Navigation and social components */}
               <Navigation />
@@ -348,13 +348,21 @@ export default function RootLayout({
 
               {/* Toast notifications */}
               <Toaster position="top-center" />
-                  <ChatWidget />
+              <ChatWidget />
+
+              {/* Analytics and tracking - only in production */}
+              {process.env.NODE_ENV === "production" && (
+                <>
+                  <Analytics />
+                  <SpeedInsights />
+                </>
+              )}
             </div>
 
-            {/* Enhanced dot pattern */}
+            {/* Optimized dot pattern */}
             <DotPattern
               className={cn(
-                "fixed inset-0 [mask-image:radial-gradient(600px_circle_at_center,white,transparent)] opacity-50 dark:opacity-30 -z-30"
+                "fixed inset-0 [mask-image:radial-gradient(500px_circle_at_center,white,transparent)] opacity-30 dark:opacity-20 -z-30"
               )}
             />
           </TooltipProvider>

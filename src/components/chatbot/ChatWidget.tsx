@@ -2,7 +2,15 @@
 
 import React, { useState, useRef, useEffect, memo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Loader2, Bot, User, Sparkles } from "lucide-react";
+import {
+  MessageCircle,
+  X,
+  Send,
+  Loader2,
+  Bot,
+  User,
+  Sparkles,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import ChatProjectCard, { ProjectCardData } from "./ChatProjectCard";
@@ -23,108 +31,118 @@ interface QuickResponse {
 }
 
 // Memoized message component for performance
-const MessageBubble = memo(({ message, isTyping }: { message: Message; isTyping: boolean }) => {
-  return (
-    <div
-      className={`flex ${
-        message.role === "user" ? "justify-end" : "justify-start"
-      }`}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 10, scale: 0.9 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ 
-          duration: 0.4,
-          ease: [0.25, 0.46, 0.45, 0.94]
-        }}
-        className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-lg ${
-          message.role === "user"
-            ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-            : "bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-gray-100 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50"
+const MessageBubble = memo(
+  ({ message, isTyping }: { message: Message; isTyping: boolean }) => {
+    return (
+      <div
+        className={`flex ${
+          message.role === "user" ? "justify-end" : "justify-start"
         }`}
       >
-        <div className="flex items-start gap-3">
-          {message.role === "assistant" && (
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 300 }}
-              className="flex-shrink-0 w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mt-0.5"
-            >
-              <Bot size={14} className="text-white" />
-            </motion.div>
-          )}
-          {message.role === "user" && (
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.1, type: "spring", stiffness: 300 }}
-              className="flex-shrink-0 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-0.5"
-            >
-              <User size={14} className="text-white" />
-            </motion.div>
-          )}
-          <div className="flex-1 leading-relaxed">
-            {message.role === "assistant" && isTyping ? (
-              <TypingAnimation text={message.content} speed={30} />
-            ) : (
-              message.content
+        <motion.div
+          initial={{ opacity: 0, y: 10, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{
+            duration: 0.4,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
+          className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-lg ${
+            message.role === "user"
+              ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
+              : "bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-gray-100 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50"
+          }`}
+        >
+          <div className="flex items-start gap-3">
+            {message.role === "assistant" && (
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 300 }}
+                className="flex-shrink-0 w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mt-0.5"
+              >
+                <Bot size={14} className="text-white" />
+              </motion.div>
             )}
+            {message.role === "user" && (
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.1, type: "spring", stiffness: 300 }}
+                className="flex-shrink-0 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center mt-0.5"
+              >
+                <User size={14} className="text-white" />
+              </motion.div>
+            )}
+            <div className="flex-1 leading-relaxed">
+              {message.role === "assistant" && isTyping ? (
+                <TypingAnimation text={message.content} speed={30} />
+              ) : (
+                message.content
+              )}
+            </div>
           </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-});
+        </motion.div>
+      </div>
+    );
+  }
+);
 
 MessageBubble.displayName = "MessageBubble";
 
 // Memoized project cards container
-const ProjectCardsContainer = memo(({ projectCards, messageId }: { projectCards: ProjectCardData[]; messageId: string }) => {
-  if (!projectCards || projectCards.length === 0) return null;
+const ProjectCardsContainer = memo(
+  ({
+    projectCards,
+    messageId,
+  }: {
+    projectCards: ProjectCardData[];
+    messageId: string;
+  }) => {
+    if (!projectCards || projectCards.length === 0) return null;
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2, duration: 0.6 }}
-      className="mt-4"
-    >
-      {projectCards.length === 1 ? (
-        // Single project card
-        <ChatProjectCard
-          key={`${messageId}-project-0`}
-          project={projectCards[0]}
-          index={0}
-        />
-      ) : (
-        // Multiple project cards with horizontal scroll
-        <div className="space-y-2">
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2"
-          >
-            <Sparkles size={12} />
-            <span>Found {projectCards.length} relevant projects</span>
-          </motion.div>
-          
-          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
-            {projectCards.map((project, index) => (
-              <div key={`${messageId}-project-${index}`} className="flex-shrink-0 w-72 snap-start">
-                <ChatProjectCard
-                  project={project}
-                  index={index}
-                />
-              </div>
-            ))}
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.6 }}
+        className="mt-4"
+      >
+        {projectCards.length === 1 ? (
+          // Single project card
+          <ChatProjectCard
+            key={`${messageId}-project-0`}
+            project={projectCards[0]}
+            index={0}
+          />
+        ) : (
+          // Multiple project cards with horizontal scroll
+          <div className="space-y-2">
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2"
+            >
+              <Sparkles size={12} />
+              <span>Found {projectCards.length} relevant projects</span>
+            </motion.div>
+
+            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
+              {projectCards.map((project, index) => (
+                <div
+                  key={`${messageId}-project-${index}`}
+                  className="flex-shrink-0 w-72 snap-start"
+                >
+                  <ChatProjectCard project={project} index={index} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </motion.div>
-  );
-});
+        )}
+      </motion.div>
+    );
+  }
+);
 
 ProjectCardsContainer.displayName = "ProjectCardsContainer";
 
@@ -140,9 +158,9 @@ export default function ChatWidget() {
 
   // Optimized scroll to bottom function
   const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ 
+    messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
-      block: "end"
+      block: "end",
     });
   }, []);
 
@@ -161,7 +179,7 @@ export default function ChatWidget() {
     };
 
     loadQuickResponses();
-  }, []);
+  }, []); // Empty dependency array
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -179,105 +197,116 @@ export default function ChatWidget() {
     }
   }, [isOpen]);
 
-  // Initial greeting message
+  // Initial greeting message - using ref to prevent double execution
+  const initializedRef = useRef(false);
   useEffect(() => {
-    if (messages.length === 0) {
+    if (!initializedRef.current && messages.length === 0) {
+      initializedRef.current = true;
       const greetingMessage: Message = {
         id: "greeting",
         role: "assistant",
-        content: "Hi! I'm here to help recruiters learn about Mohamed Khairi Bouzid's background, projects, and skills. What would you like to know?",
+        content:
+          "Hi! I'm here to help recruiters learn about Mohamed Khairi Bouzid's background, projects, and skills. What would you like to know?",
         timestamp: new Date(),
       };
-      
+
       setMessages([greetingMessage]);
       setTypingMessageId("greeting");
-      
+
       // Stop typing animation after content is "typed"
       setTimeout(() => {
         setTypingMessageId(null);
       }, greetingMessage.content.length * 30 + 1000);
     }
-  }, [messages.length]);
+  }, []);
 
-  const sendMessage = useCallback(async (messageText?: string) => {
-    const textToSend = messageText || inputValue.trim();
-    if (!textToSend || isLoading) return;
+  const sendMessage = useCallback(
+    async (messageText?: string) => {
+      const textToSend = messageText || inputValue.trim();
+      if (!textToSend || isLoading) return;
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: "user",
-      content: textToSend,
-      timestamp: new Date(),
-    };
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        role: "user",
+        content: textToSend,
+        timestamp: new Date(),
+      };
 
-    setMessages((prev) => [...prev, userMessage]);
-    setInputValue("");
-    setIsLoading(true);
+      setMessages((prev) => [...prev, userMessage]);
+      setInputValue("");
+      setIsLoading(true);
 
-    try {
-      const response = await fetch("/api/chatbot", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: textToSend,
-          conversationHistory: messages.slice(-10).map((msg) => ({
-            role: msg.role,
-            content: msg.content,
-          })),
-        }),
-      });
+      try {
+        const response = await fetch("/api/chatbot", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: textToSend,
+            conversationHistory: messages.slice(-10).map((msg) => ({
+              role: msg.role,
+              content: msg.content,
+            })),
+          }),
+        });
 
-      if (!response.ok) {
-        throw new Error("Failed to get response");
+        if (!response.ok) {
+          throw new Error("Failed to get response");
+        }
+
+        const data = await response.json();
+
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: data.response,
+          timestamp: new Date(),
+          projectCards: data.projectCards || [],
+        };
+
+        setMessages((prev) => [...prev, assistantMessage]);
+
+        // Start typing animation for assistant message
+        setTypingMessageId(assistantMessage.id);
+
+        // Stop typing animation after content is "typed"
+        setTimeout(() => {
+          setTypingMessageId(null);
+        }, assistantMessage.content.length * 30 + 500);
+      } catch (error) {
+        console.error("Chat error:", error);
+        const errorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content:
+            "I apologize, but I'm experiencing technical difficulties. Please try again or contact Mohamed directly at khairibouzid95@gmail.com",
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, errorMessage]);
+      } finally {
+        setIsLoading(false);
       }
+    },
+    [inputValue, isLoading, messages]
+  );
 
-      const data = await response.json();
+  const handleKeyPress = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    },
+    [sendMessage]
+  );
 
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: data.response,
-        timestamp: new Date(),
-        projectCards: data.projectCards || [],
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-      
-      // Start typing animation for assistant message
-      setTypingMessageId(assistantMessage.id);
-      
-      // Stop typing animation after content is "typed"
-      setTimeout(() => {
-        setTypingMessageId(null);
-      }, assistantMessage.content.length * 30 + 500);
-      
-    } catch (error) {
-      console.error("Chat error:", error);
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content:
-          "I apologize, but I'm experiencing technical difficulties. Please try again or contact Mohamed directly at khairibouzid95@gmail.com",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, errorMessage]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [inputValue, isLoading, messages]);
-
-  const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  }, [sendMessage]);
-
-  const handleQuickResponse = useCallback((question: string) => {
-    sendMessage(question);
-  }, [sendMessage]);
+  const handleQuickResponse = useCallback(
+    (question: string) => {
+      sendMessage(question);
+    },
+    [sendMessage]
+  );
 
   return (
     <>
@@ -286,11 +315,11 @@ export default function ChatWidget() {
         className="fixed bottom-6 right-6 z-[9998]"
         initial={{ scale: 0, rotate: -180 }}
         animate={{ scale: 1, rotate: 0 }}
-        transition={{ 
-          delay: 0.5, 
-          type: "spring", 
+        transition={{
+          delay: 0.5,
+          type: "spring",
           stiffness: 300,
-          damping: 20
+          damping: 20,
         }}
       >
         <motion.div
@@ -307,7 +336,7 @@ export default function ChatWidget() {
             }}
             transition={{ duration: 0.3 }}
           />
-          
+
           <Button
             onClick={() => setIsOpen(!isOpen)}
             size="lg"
@@ -373,12 +402,16 @@ export default function ChatWidget() {
                   }}
                   style={{ backgroundSize: "200% 200%" }}
                 />
-                
+
                 <div className="flex items-center gap-3 relative z-10">
                   <motion.div
                     className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm"
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 20, ease: "linear", repeat: Infinity }}
+                    transition={{
+                      duration: 20,
+                      ease: "linear",
+                      repeat: Infinity,
+                    }}
                   >
                     <Bot size={20} />
                   </motion.div>
@@ -389,7 +422,7 @@ export default function ChatWidget() {
                     </p>
                   </div>
                 </div>
-                
+
                 <motion.div
                   className="w-3 h-3 bg-green-400 rounded-full"
                   animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
@@ -405,31 +438,32 @@ export default function ChatWidget() {
                       key={message.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ 
+                      transition={{
                         duration: 0.5,
-                        ease: [0.25, 0.46, 0.45, 0.94]
+                        ease: [0.25, 0.46, 0.45, 0.94],
                       }}
                       className="space-y-4"
                     >
                       {/* Conditional rendering based on whether project cards exist */}
-                      {message.projectCards && message.projectCards.length > 0 ? (
+                      {message.projectCards &&
+                      message.projectCards.length > 0 ? (
                         <>
                           {/* Project Cards first for better visual hierarchy */}
                           <ProjectCardsContainer
                             projectCards={message.projectCards}
                             messageId={message.id}
                           />
-                          
+
                           {/* Text explanation below cards */}
-                          <MessageBubble 
-                            message={message} 
+                          <MessageBubble
+                            message={message}
                             isTyping={typingMessageId === message.id}
                           />
                         </>
                       ) : (
                         /* Regular message without project cards */
-                        <MessageBubble 
-                          message={message} 
+                        <MessageBubble
+                          message={message}
                           isTyping={typingMessageId === message.id}
                         />
                       )}
@@ -448,7 +482,11 @@ export default function ChatWidget() {
                         <motion.div
                           className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center"
                           animate={{ rotate: 360 }}
-                          transition={{ duration: 1, ease: "linear", repeat: Infinity }}
+                          transition={{
+                            duration: 1,
+                            ease: "linear",
+                            repeat: Infinity,
+                          }}
                         >
                           <Bot size={14} className="text-white" />
                         </motion.div>
@@ -487,7 +525,7 @@ export default function ChatWidget() {
                       transition={{ delay: 2 }}
                       className="space-y-3"
                     >
-                      <motion.p 
+                      <motion.p
                         className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-2"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -502,11 +540,11 @@ export default function ChatWidget() {
                             key={index}
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            transition={{ 
+                            transition={{
                               delay: 2.4 + index * 0.1,
                               type: "spring",
                               stiffness: 300,
-                              damping: 25
+                              damping: 25,
                             }}
                             whileHover={{ scale: 1.05, y: -2 }}
                             whileTap={{ scale: 0.95 }}
@@ -525,7 +563,7 @@ export default function ChatWidget() {
               </div>
 
               {/* Enhanced Input Section */}
-              <motion.div 
+              <motion.div
                 className="p-4 border-t border-gray-200/50 dark:border-gray-700/50 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -547,15 +585,15 @@ export default function ChatWidget() {
                     />
                     <motion.div
                       className="absolute right-3 top-1/2 transform -translate-y-1/2"
-                      animate={{ 
+                      animate={{
                         opacity: inputValue.trim() ? 1 : 0.5,
-                        scale: inputValue.trim() ? 1 : 0.8 
+                        scale: inputValue.trim() ? 1 : 0.8,
                       }}
                     >
                       <Sparkles size={16} className="text-gray-400" />
                     </motion.div>
                   </div>
-                  
+
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -567,21 +605,17 @@ export default function ChatWidget() {
                       className="h-12 w-12 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 border-0 shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <motion.div
-                        animate={{ 
+                        animate={{
                           rotate: isLoading ? 360 : 0,
-                          scale: isLoading ? 0.8 : 1
+                          scale: isLoading ? 0.8 : 1,
                         }}
-                        transition={{ 
+                        transition={{
                           duration: isLoading ? 1 : 0.2,
                           repeat: isLoading ? Infinity : 0,
-                          ease: "linear"
+                          ease: "linear",
                         }}
                       >
-                        {isLoading ? (
-                          <Loader2 size={18} />
-                        ) : (
-                          <Send size={18} />
-                        )}
+                        {isLoading ? <Loader2 size={18} /> : <Send size={18} />}
                       </motion.div>
                     </Button>
                   </motion.div>

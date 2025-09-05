@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { useRef, ReactNode } from "react";
+import { useRef, ReactNode, memo } from "react";
 import { cn } from "@/lib/utils";
 
 interface AnimatedSectionProps {
@@ -60,7 +60,7 @@ const animationVariants = {
   },
 };
 
-export default function AnimatedSection({
+const AnimatedSection = memo(function AnimatedSection({
   children,
   className,
   animation = "fadeUp",
@@ -94,8 +94,9 @@ export default function AnimatedSection({
       {children}
     </motion.div>
   );
-}
+});
 
+// Staggered children animation component
 // Staggered children animation component
 interface StaggeredContainerProps {
   children: ReactNode;
@@ -105,7 +106,7 @@ interface StaggeredContainerProps {
   once?: boolean;
 }
 
-export function StaggeredContainer({
+export const StaggeredContainer = memo(function StaggeredContainer({
   children,
   className,
   staggerDelay = 0.1,
@@ -155,7 +156,7 @@ export function StaggeredContainer({
       )}
     </motion.div>
   );
-}
+});
 
 // Parallax component for background elements
 interface ParallaxProps {
@@ -164,7 +165,11 @@ interface ParallaxProps {
   speed?: number;
 }
 
-export function Parallax({ children, className, speed = 0.5 }: ParallaxProps) {
+export const Parallax = memo(function Parallax({
+  children,
+  className,
+  speed = 0.5,
+}: ParallaxProps) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -178,4 +183,6 @@ export function Parallax({ children, className, speed = 0.5 }: ParallaxProps) {
       {children}
     </motion.div>
   );
-}
+});
+
+export default AnimatedSection;

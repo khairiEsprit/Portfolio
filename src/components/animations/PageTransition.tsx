@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, memo } from "react";
 import { usePathname } from "next/navigation";
 
 interface PageTransitionProps {
@@ -33,7 +33,10 @@ const pageTransition = {
   duration: 0.4,
 };
 
-export default function PageTransition({ children, className }: PageTransitionProps) {
+const PageTransition = memo(function PageTransition({
+  children,
+  className,
+}: PageTransitionProps) {
   const pathname = usePathname();
 
   return (
@@ -51,10 +54,15 @@ export default function PageTransition({ children, className }: PageTransitionPr
       </motion.div>
     </AnimatePresence>
   );
-}
+});
+
+export default PageTransition;
 
 // Alternative slide transition
-export function SlidePageTransition({ children, className }: PageTransitionProps) {
+export const SlidePageTransition = memo(function SlidePageTransition({
+  children,
+  className,
+}: PageTransitionProps) {
   const pathname = usePathname();
 
   const slideVariants = {
@@ -87,10 +95,13 @@ export function SlidePageTransition({ children, className }: PageTransitionProps
       </motion.div>
     </AnimatePresence>
   );
-}
+});
 
 // Fade transition with blur effect
-export function BlurPageTransition({ children, className }: PageTransitionProps) {
+export const BlurPageTransition = memo(function BlurPageTransition({
+  children,
+  className,
+}: PageTransitionProps) {
   const pathname = usePathname();
 
   const blurVariants = {
@@ -129,7 +140,7 @@ export function BlurPageTransition({ children, className }: PageTransitionProps)
       </motion.div>
     </AnimatePresence>
   );
-}
+});
 
 // Loading transition with skeleton
 interface LoadingTransitionProps {
@@ -138,10 +149,10 @@ interface LoadingTransitionProps {
   className?: string;
 }
 
-export function LoadingTransition({ 
-  children, 
-  loading = false, 
-  className 
+export const LoadingTransition = memo(function LoadingTransition({
+  children,
+  loading = false,
+  className,
 }: LoadingTransitionProps) {
   return (
     <AnimatePresence mode="wait">
@@ -175,10 +186,13 @@ export function LoadingTransition({
       )}
     </AnimatePresence>
   );
-}
+});
 
 // Staggered reveal transition
-export function StaggeredReveal({ children, className }: PageTransitionProps) {
+export const StaggeredReveal = memo(function StaggeredReveal({
+  children,
+  className,
+}: PageTransitionProps) {
   const pathname = usePathname();
 
   const containerVariants = {
@@ -233,15 +247,16 @@ export function StaggeredReveal({ children, className }: PageTransitionProps) {
         variants={containerVariants}
         className={className}
       >
-        {Array.isArray(children) 
-          ? children.map((child, index) => (
-              <motion.div key={index} variants={itemVariants}>
-                {child}
-              </motion.div>
-            ))
-          : <motion.div variants={itemVariants}>{children}</motion.div>
-        }
+        {Array.isArray(children) ? (
+          children.map((child, index) => (
+            <motion.div key={index} variants={itemVariants}>
+              {child}
+            </motion.div>
+          ))
+        ) : (
+          <motion.div variants={itemVariants}>{children}</motion.div>
+        )}
       </motion.div>
     </AnimatePresence>
   );
-}
+});

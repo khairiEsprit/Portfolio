@@ -2,7 +2,14 @@
 
 import React, { memo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Github, Calendar, Star, Sparkles, Code2 } from "lucide-react";
+import {
+  ExternalLink,
+  Github,
+  Calendar,
+  Star,
+  Sparkles,
+  Code2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -31,15 +38,15 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
 
   // Animation variants for performance optimization
   const cardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 20, 
+    hidden: {
+      opacity: 0,
+      y: 20,
       scale: 0.9,
       rotateX: 10,
     },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       scale: 1,
       rotateX: 0,
       transition: {
@@ -49,42 +56,42 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
         type: "spring",
         stiffness: 300,
         damping: 30,
-      }
+      },
     },
     hover: {
       scale: 1.03,
       y: -4,
       transition: {
         duration: 0.2,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   const glowVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: isHovered ? 0.6 : 0,
-      transition: { duration: 0.3 }
-    }
+      transition: { duration: 0.3 },
+    },
   };
 
   const badgeVariants = {
     rest: { scale: 1, opacity: 0.8 },
-    hover: { 
-      scale: 1.05, 
+    hover: {
+      scale: 1.05,
       opacity: 1,
-      transition: { duration: 0.2 }
-    }
+      transition: { duration: 0.2 },
+    },
   };
 
   const buttonVariants = {
     rest: { scale: 1 },
-    hover: { 
+    hover: {
       scale: 1.05,
-      transition: { duration: 0.2 }
+      transition: { duration: 0.2 },
     },
-    tap: { scale: 0.95 }
+    tap: { scale: 0.95 },
   };
 
   return (
@@ -102,24 +109,24 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
         variants={glowVariants}
         className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 rounded-2xl blur-xl -z-10"
       />
-      
+
       {/* Glassmorphism card */}
       <Card className="relative rounded-2xl border-0 overflow-hidden group backdrop-blur-sm bg-white/80 dark:bg-gray-900/80 shadow-xl hover:shadow-2xl transition-all duration-300">
         {/* Gradient border effect */}
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-2xl p-px">
           <div className="h-full w-full bg-white dark:bg-gray-900 rounded-2xl" />
         </div>
-        
+
         {/* Animated background pattern */}
         <div className="absolute inset-0 opacity-5 dark:opacity-10">
           <motion.div
-            animate={{ 
-              backgroundPosition: isHovered ? "100% 100%" : "0% 0%" 
+            animate={{
+              backgroundPosition: isHovered ? "100% 100%" : "0% 0%",
             }}
             transition={{ duration: 8, ease: "linear", repeat: Infinity }}
             className="w-full h-full bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400"
             style={{
-              backgroundSize: "400% 400%"
+              backgroundSize: "400% 400%",
             }}
           />
         </div>
@@ -128,7 +135,7 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
           {/* Header with enhanced styling */}
           <div className="flex items-start justify-between mb-4">
             <div className="flex-1">
-              <motion.h3 
+              <motion.h3
                 className="text-lg font-bold text-gray-900 dark:text-gray-100 line-clamp-1 mb-2"
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -136,25 +143,25 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
               >
                 {project.title}
               </motion.h3>
-              
-              <motion.div 
+
+              <motion.div
                 className="flex items-center gap-2 flex-wrap"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.15 + 0.3 }}
               >
                 {project.category && (
-                  <Badge 
-                    variant="secondary" 
+                  <Badge
+                    variant="secondary"
                     className="text-xs px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-700 dark:text-blue-300 border-0 font-medium"
                   >
                     <Code2 size={10} className="mr-1" />
                     {project.category}
                   </Badge>
                 )}
-                
+
                 {project.status === "completed" && (
-                  <motion.div 
+                  <motion.div
                     className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded-full"
                     whileHover={{ scale: 1.05 }}
                   >
@@ -164,9 +171,9 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
                 )}
               </motion.div>
             </div>
-            
+
             {project.completionDate && (
-              <motion.div 
+              <motion.div
                 className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -179,7 +186,7 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
           </div>
 
           {/* Enhanced description */}
-          <motion.p 
+          <motion.p
             className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 leading-relaxed"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -189,7 +196,7 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
           </motion.p>
 
           {/* Animated technology badges */}
-          <motion.div 
+          <motion.div
             className="mb-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -204,11 +211,11 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
                     whileHover="hover"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ 
+                    transition={{
                       delay: index * 0.15 + 0.6 + techIndex * 0.1,
                       type: "spring",
                       stiffness: 400,
-                      damping: 25
+                      damping: 25,
                     }}
                   >
                     <Badge
@@ -220,7 +227,7 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
                   </motion.div>
                 ))}
               </AnimatePresence>
-              
+
               {project.technologies.length > 4 && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -232,8 +239,8 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
                     variant="outline"
                     className="text-xs px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-600"
                   >
-                    <Sparkles size={10} className="mr-1" />
-                    +{project.technologies.length - 4} more
+                    <Sparkles size={10} className="mr-1" />+
+                    {project.technologies.length - 4} more
                   </Badge>
                 </motion.div>
               )}
@@ -241,7 +248,7 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
           </motion.div>
 
           {/* Enhanced action buttons */}
-          <motion.div 
+          <motion.div
             className="flex gap-3"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -253,7 +260,7 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
                 initial="rest"
                 whileHover="hover"
                 whileTap="tap"
-                onHoverStart={() => setButtonHovered('live')}
+                onHoverStart={() => setButtonHovered("live")}
                 onHoverEnd={() => setButtonHovered(null)}
                 className="flex-1"
               >
@@ -265,23 +272,23 @@ const ChatProjectCard = memo(({ project, index = 0 }: ChatProjectCardProps) => {
                   {/* Button glow effect */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-20"
-                    animate={{ opacity: buttonHovered === 'live' ? 0.3 : 0 }}
+                    animate={{ opacity: buttonHovered === "live" ? 0.3 : 0 }}
                     transition={{ duration: 0.2 }}
                   />
-                  
+
                   <ExternalLink size={12} className="mr-2" />
                   <span>View Project</span>
                 </Button>
               </motion.div>
             )}
-            
+
             {project.github && project.github !== "#" && (
               <motion.div
                 variants={buttonVariants}
                 initial="rest"
                 whileHover="hover"
                 whileTap="tap"
-                onHoverStart={() => setButtonHovered('github')}
+                onHoverStart={() => setButtonHovered("github")}
                 onHoverEnd={() => setButtonHovered(null)}
               >
                 <Button

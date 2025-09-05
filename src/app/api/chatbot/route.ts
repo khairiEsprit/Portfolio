@@ -34,21 +34,22 @@ export async function POST(request: NextRequest) {
       conversationHistory: conversationHistory || [],
     });
 
-    console.log('API Response:', {
+    console.log("API Response:", {
       response: result.response,
       responseLength: result.response?.length || 0,
       projectCardsCount: result.projectCards?.length || 0,
-      projectCards: result.projectCards
+      projectCards: result.projectCards,
     });
 
     // Ensure we always have a response
     if (!result.response || result.response.trim().length === 0) {
       console.error("Empty response from agent, providing fallback");
       return NextResponse.json({
-        response: "I'm here to help! Could you please rephrase your question? I'm ready to tell you about Mohamed's projects, skills, and experience.",
+        response:
+          "I'm here to help! Could you please rephrase your question? I'm ready to tell you about Mohamed's projects, skills, and experience.",
         context: result.context,
         projectCards: result.projectCards || [],
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     }
 
@@ -56,9 +57,8 @@ export async function POST(request: NextRequest) {
       response: result.response,
       context: result.context,
       projectCards: result.projectCards || [],
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
-
   } catch (error) {
     console.error("Chat API Error:", error);
 

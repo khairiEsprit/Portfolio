@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Github, ExternalLink, Eye, Calendar } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, memo, useCallback } from "react";
 import { Tilt } from "react-tilt";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,9 +20,21 @@ interface ProjectCardProps {
   className?: string;
 }
 
-const ProjectCard = ({ project, index, className }: ProjectCardProps) => {
+const ProjectCard = memo(function ProjectCard({
+  project,
+  index,
+  className,
+}: ProjectCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+
+  const handleImageLoad = useCallback(() => {
+    setImageLoaded(true);
+  }, []);
+
+  const handleImageError = useCallback(() => {
+    setImageError(true);
+  }, []);
 
   const cardVariants = {
     hidden: {
@@ -82,11 +94,10 @@ const ProjectCard = ({ project, index, className }: ProjectCardProps) => {
                   src={project.image}
                   alt={`${project.title} preview`}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-70 project-card-image"
-                  onLoad={() => setImageLoaded(true)}
-                  onError={() => setImageError(true)}
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority={index < 2}
+                  onLoad={handleImageLoad}
+                  onError={handleImageError}
                 />
               </motion.div>
             ) : (
@@ -244,6 +255,6 @@ const ProjectCard = ({ project, index, className }: ProjectCardProps) => {
       </Tilt>
     </motion.div>
   );
-};
+});
 
 export default ProjectCard;

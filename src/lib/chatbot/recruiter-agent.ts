@@ -100,7 +100,7 @@ Remember: ALWAYS respond helpfully to ALL questions, especially follow-ups about
     projectCards: ProjectCardData[];
   } {
     console.log("Raw AI response:", response); // Debug log
-    
+
     const projectCardPattern = /\[PROJECT_CARDS:\s*([^\]]+)\]/i;
     const match = response.match(projectCardPattern);
 
@@ -143,22 +143,38 @@ Remember: ALWAYS respond helpfully to ALL questions, especially follow-ups about
   // Fallback method to detect if project cards should be shown
   private shouldShowProjectCards(message: string): ProjectCardData[] {
     const lowerMessage = message.toLowerCase();
-    
+
     // Keywords that should trigger project cards (only for new project introductions)
     const newProjectKeywords = [
-      'show me projects', 'tell me about projects', 'what projects', 'your projects',
-      'portfolio', 'work you\'ve done', 'built', 'created', 'developed projects'
+      "show me projects",
+      "tell me about projects",
+      "what projects",
+      "your projects",
+      "portfolio",
+      "work you've done",
+      "built",
+      "created",
+      "developed projects",
     ];
 
     // Follow-up question keywords that should NOT trigger new project cards
     const followUpKeywords = [
-      'these project', 'this project', 'the project', 'technologies used',
-      'how did you', 'what technologies', 'tech stack', 'built with',
-      'challenges', 'difficulties', 'implementation', 'approach'
+      "these project",
+      "this project",
+      "the project",
+      "technologies used",
+      "how did you",
+      "what technologies",
+      "tech stack",
+      "built with",
+      "challenges",
+      "difficulties",
+      "implementation",
+      "approach",
     ];
 
     // If it's a follow-up question, don't show project cards
-    const isFollowUp = followUpKeywords.some(keyword => 
+    const isFollowUp = followUpKeywords.some((keyword) =>
       lowerMessage.includes(keyword)
     );
 
@@ -168,51 +184,75 @@ Remember: ALWAYS respond helpfully to ALL questions, especially follow-ups about
     }
 
     // Only show project cards for new project introductions
-    const isNewProjectQuestion = newProjectKeywords.some(keyword => 
-      lowerMessage.includes(keyword)
-    ) || lowerMessage.includes('project') && !isFollowUp;
+    const isNewProjectQuestion =
+      newProjectKeywords.some((keyword) => lowerMessage.includes(keyword)) ||
+      (lowerMessage.includes("project") && !isFollowUp);
 
     if (!isNewProjectQuestion) {
       return [];
     }
 
     // Return relevant projects based on keywords
-    const allProjectIds = ['carbon-calculator', 'ai-mock-interview', 'deal-discover', 'email-reply-agent', 'e-waste'];
-    
+    const allProjectIds = [
+      "carbon-calculator",
+      "ai-mock-interview",
+      "deal-discover",
+      "email-reply-agent",
+      "e-waste",
+    ];
+
     const projectMap: { [key: string]: ProjectType } = {
-      "carbon-calculator": ProjectData.find(p => p.title === "Carbon Calculator")!,
-      "ai-mock-interview": ProjectData.find(p => p.title === "AI Mock Interview")!,
-      "deal-discover": ProjectData.find(p => p.title === "DealDiscover")!,
-      "email-reply-agent": ProjectData.find(p => p.title === "Email Reply Agent")!,
-      "e-waste": ProjectData.find(p => p.title === "E-waste Management")!,
+      "carbon-calculator": ProjectData.find(
+        (p) => p.title === "Carbon Calculator"
+      )!,
+      "ai-mock-interview": ProjectData.find(
+        (p) => p.title === "AI Mock Interview"
+      )!,
+      "deal-discover": ProjectData.find((p) => p.title === "DealDiscover")!,
+      "email-reply-agent": ProjectData.find(
+        (p) => p.title === "Email Reply Agent"
+      )!,
+      "e-waste": ProjectData.find((p) => p.title === "E-waste Management")!,
     };
 
     // Specific matching for new project questions
-    if (lowerMessage.includes('ai') || lowerMessage.includes('artificial') || lowerMessage.includes('interview')) {
-      return ['ai-mock-interview', 'email-reply-agent']
-        .map(id => projectMap[id])
+    if (
+      lowerMessage.includes("ai") ||
+      lowerMessage.includes("artificial") ||
+      lowerMessage.includes("interview")
+    ) {
+      return ["ai-mock-interview", "email-reply-agent"]
+        .map((id) => projectMap[id])
         .filter(Boolean)
-        .map(project => this.convertProjectToCardData(project));
+        .map((project) => this.convertProjectToCardData(project));
     }
 
-    if (lowerMessage.includes('deal') || lowerMessage.includes('travel') || lowerMessage.includes('recommendation')) {
-      return [projectMap['deal-discover']]
+    if (
+      lowerMessage.includes("deal") ||
+      lowerMessage.includes("travel") ||
+      lowerMessage.includes("recommendation")
+    ) {
+      return [projectMap["deal-discover"]]
         .filter(Boolean)
-        .map(project => this.convertProjectToCardData(project));
+        .map((project) => this.convertProjectToCardData(project));
     }
 
-    if (lowerMessage.includes('environment') || lowerMessage.includes('carbon') || lowerMessage.includes('sustainability')) {
-      return ['carbon-calculator', 'e-waste']
-        .map(id => projectMap[id])
+    if (
+      lowerMessage.includes("environment") ||
+      lowerMessage.includes("carbon") ||
+      lowerMessage.includes("sustainability")
+    ) {
+      return ["carbon-calculator", "e-waste"]
+        .map((id) => projectMap[id])
         .filter(Boolean)
-        .map(project => this.convertProjectToCardData(project));
+        .map((project) => this.convertProjectToCardData(project));
     }
 
     // Default: show all projects for general project questions
     return allProjectIds
-      .map(id => projectMap[id])
+      .map((id) => projectMap[id])
       .filter(Boolean)
-      .map(project => this.convertProjectToCardData(project));
+      .map((project) => this.convertProjectToCardData(project));
   }
 
   async processMessage(request: ChatRequest): Promise<ChatResponse> {
@@ -237,7 +277,10 @@ Remember: ALWAYS respond helpfully to ALL questions, especially follow-ups about
       ];
 
       // Add conversation history if provided (keep last 8 messages for better context)
-      if (request.conversationHistory && request.conversationHistory.length > 0) {
+      if (
+        request.conversationHistory &&
+        request.conversationHistory.length > 0
+      ) {
         messages.push(...request.conversationHistory.slice(-8));
       }
 
@@ -259,7 +302,8 @@ Remember: ALWAYS respond helpfully to ALL questions, especially follow-ups about
       }
 
       // Parse response for project cards
-      const { cleanResponse, projectCards } = this.parseProjectCards(rawResponse);
+      const { cleanResponse, projectCards } =
+        this.parseProjectCards(rawResponse);
 
       // If no project cards were found in AI response, use fallback detection
       let finalProjectCards = projectCards;

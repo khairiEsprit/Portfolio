@@ -12,6 +12,27 @@ import AnimatedSection, {
 import Typewriter from "typewriter-effect";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { memo } from "react";
+
+// Memoize floating elements to prevent re-renders
+const FloatingElement = memo(function FloatingElement({
+  className,
+  animateProps,
+  transitionProps,
+}: {
+  className: string;
+  animateProps: any;
+  transitionProps: any;
+}) {
+  return (
+    <motion.div
+      className={className}
+      animate={animateProps}
+      transition={transitionProps}
+      aria-hidden="true"
+    />
+  );
+});
 
 export default function Home() {
   return (
@@ -23,32 +44,30 @@ export default function Home() {
       />
 
       {/* Floating background elements */}
-      <motion.div
+      <FloatingElement
         className="absolute top-20 left-10 w-20 h-20 bg-blue-200/30 dark:bg-blue-800/30 rounded-full blur-xl"
-        animate={{
+        animateProps={{
           y: [0, -20, 0],
           x: [0, 10, 0],
         }}
-        transition={{
+        transitionProps={{
           duration: 6,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        aria-hidden="true"
       />
-      <motion.div
+      <FloatingElement
         className="absolute bottom-20 right-10 w-32 h-32 bg-purple-200/30 dark:bg-purple-800/30 rounded-full blur-xl"
-        animate={{
+        animateProps={{
           y: [0, 20, 0],
           x: [0, -15, 0],
         }}
-        transition={{
+        transitionProps={{
           duration: 8,
           repeat: Infinity,
           ease: "easeInOut",
           delay: 2,
         }}
-        aria-hidden="true"
       />
 
       <div className="responsive-container balanced-layout main-content-container">

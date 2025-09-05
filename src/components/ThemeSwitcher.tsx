@@ -8,10 +8,23 @@ import { Button } from "@/components/ui/button";
 
 export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
 
-  const toggleTheme = () => {
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const toggleTheme = React.useCallback(() => {
     setTheme(theme === "dark" ? "light" : "dark");
-  };
+  }, [theme, setTheme]);
+
+  if (!mounted) {
+    return (
+      <Button variant="outline" size="icon" className="rounded-full">
+        <Sun className="h-[1.5rem] w-[1.5rem]" />
+      </Button>
+    );
+  }
 
   return (
     <Button

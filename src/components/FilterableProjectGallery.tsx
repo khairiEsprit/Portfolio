@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Grid, List } from "lucide-react";
 import ProjectCard from "@/components/ProjectCard";
@@ -24,7 +24,7 @@ interface FilterableProjectGalleryProps {
   className?: string;
 }
 
-export default function FilterableProjectGallery({
+const FilterableProjectGallery = memo(function FilterableProjectGallery({
   projects,
   className,
 }: FilterableProjectGalleryProps) {
@@ -270,4 +270,6 @@ export default function FilterableProjectGallery({
       </motion.div>
     </motion.div>
   );
-}
+});
+
+export default FilterableProjectGallery;
